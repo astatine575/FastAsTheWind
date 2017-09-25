@@ -1,0 +1,5 @@
+(number of DialogueSets)
+(string for npc dialogue in first DialogueSet)/(number of DAChoices)
+(string of text for first DAChoice in first DialogueSet)/(int for nextSet), (int for executed method, -1 if none)
+(repeat above for all DAChoices)
+(repeat above 3 lines for all DialogueSets)
