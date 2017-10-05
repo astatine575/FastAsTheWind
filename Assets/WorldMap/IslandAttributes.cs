@@ -1,0 +1,282 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class IslandAttributes : MonoBehaviour
+{
+
+    public string islandName;
+    public int islandID;
+    public bool hasBlacksmith;
+    public bool hasGunsmith;
+    public bool hasTavern;
+    public bool hasWardsmith;
+    public bool hasArchetier;
+
+    public bool hasSpecial; //No need to set this to true, ever
+    public string specialText; //Not necessary if not an island with a special button
+    public string specInfo;
+    public string specInfoResponse;
+    public int actions;
+
+    private GameObject activePanel;
+
+    public bool specialVisible;
+    private bool isDiscovered;
+
+
+    // Use this for initialization
+    public virtual void Start()
+    {
+        specialVisible = false;
+        actions = 0;
+        isDiscovered = false;
+        specialVisible = false;
+        transform.position = IslandStats.IslandLocations[islandID];
+    }
+
+    public void Default()
+    {
+
+    }
+
+    public void SetAttributes(string name, bool blackS, bool gunS, bool tav, bool wardS, bool arch, bool special)
+    {
+        islandName = name; hasBlacksmith = blackS; hasGunsmith = gunS; hasTavern = tav;
+        hasWardsmith = wardS; hasArchetier = arch; hasSpecial = special;
+    }
+
+    public void SetDiscovered()
+    {
+        isDiscovered = true;
+    }
+
+    public bool GetDiscovered()
+    {
+        return isDiscovered;
+    }
+
+    public string GetName()
+    {
+        return islandName;
+    }
+
+    public void SetActivePanel(GameObject panel)
+    {
+        activePanel = panel;
+    }
+
+    public GameObject GetActivePanel()
+    {
+        return activePanel;
+    }
+
+    //Below are all the virtual classes
+
+
+    public virtual bool CheckSpecial() //Here, in subclass, have this return true if the requirements have been met for seeing the special button
+    {
+        return false;
+    }
+
+    public virtual string GetSpecInfoButtonText()
+    {
+        return "NONE";
+    }
+
+    public virtual string GetSpecInfoResponse()
+    {
+        return "";
+    }
+
+    public virtual string GetRumors() //In subclass, return a rumor string of your choice, as well as initiate any changes caused by that/those rumor/s
+    {
+        return null;
+    }
+
+    //What the buttons in the visitation scene do, which can be overwritten by a subclass of IslandAttributes
+    public virtual void MarketOnClick(MainPanelButton caller)
+    {
+        caller.mainPanel.SetActive(false);
+        caller.linkedPanel.SetActive(true);
+
+        caller.goldCountText.text = "Gold: " + PlayerStatus.GoldCount;
+        caller.relevantStatText.text = "Resources: " + PlayerStatus.ResourcesCount.ToString();
+        caller.interactionsText.text = "Whatcha buyin', stranger?";
+
+        activePanel = caller.linkedPanel;
+    }
+
+    public virtual void BlacksmithOnClick(MainPanelButton caller)
+    {
+        caller.mainPanel.SetActive(false);
+        caller.linkedPanel.SetActive(true);
+
+        caller.goldCountText.text = "Gold: " + PlayerStatus.GoldCount;
+        caller.interactionsText.text = "Need yourself some steel? You've come to the right place.";
+
+        activePanel = caller.linkedPanel;
+    }
+
+    public virtual void GunsmithOnClick(MainPanelButton caller)
+    {
+        caller.mainPanel.SetActive(false);
+        caller.linkedPanel.SetActive(true);
+
+        caller.goldCountText.text = "Gold: " + PlayerStatus.GoldCount;
+        caller.relevantStatText.text = "Cannonballs: " + PlayerStatus.AmmoCount.ToString();
+        caller.interactionsText.text = "Looking to defend yourself, huh? I got just the thing.";
+
+        activePanel = caller.linkedPanel;
+    }
+
+    public virtual void WardsmithOnClick(MainPanelButton caller)
+    {
+        caller.mainPanel.SetActive(false);
+        caller.linkedPanel.SetActive(true);
+
+        caller.goldCountText.text = "Gold: " + PlayerStatus.GoldCount;
+        caller.interactionsText.text = "Ahhhh. Welcome, good sir. You've come to the right store; the other wardsmiths on this island " +
+            "are contemptible amateurs.";
+
+        activePanel = caller.linkedPanel;
+    }
+
+    public virtual void ArchetierOnClick(MainPanelButton caller)
+    {
+        caller.mainPanel.SetActive(false);
+        caller.linkedPanel.SetActive(true);
+
+        caller.goldCountText.text = "Gold: " + PlayerStatus.GoldCount;
+        caller.interactionsText.text = "It may not be as flashy, but a bow in the right hands is worth a dozen muskets. " +
+            "Anything I can get for you?";
+
+        activePanel = caller.linkedPanel;
+    }
+
+    public virtual void TavernOnClick(MainPanelButton caller)
+    {
+        caller.mainPanel.SetActive(false);
+        caller.linkedPanel.SetActive(true);
+
+        caller.interactionsText.text = "*The tavern is filled with rowdy drunks, singing along with a bard who looks like he'd" +
+            "rather be elsewhere. The bartender greets you warmly, offering food and drinks (for an outrageous price, of course).*";
+
+        activePanel = caller.linkedPanel;
+    }
+
+    public virtual void ShipswrightOnClick(MainPanelButton caller)
+    {
+        caller.mainPanel.SetActive(false);
+        caller.linkedPanel.SetActive(true);
+
+        if (PlayerStatus.ShipHealthCurrent == PlayerStatus.ShipHealthMax)
+            caller.interactionsText.text = "Looking to upgrade your ship, eh?";
+        else caller.interactionsText.text = "Yer ship's lookin' a little rough there. " +
+                "Want me to patch 'er up fer ya?";
+
+        caller.goldCountText.text = "Gold: " + PlayerStatus.GoldCount;
+        caller.relevantStatText.text = "Ship Health: " + PlayerStatus.ShipHealthCurrent + "/" + PlayerStatus.ShipHealthMax;
+
+        activePanel = caller.linkedPanel;
+    }
+
+    public virtual void SpecialOnClick(MainPanelButton caller) //Generic islands have no special button
+    {
+        Debug.Log("This shouldn't be here");
+    }
+
+    public virtual void SetSailOnClick(MainPanelButton caller)
+    {
+        SceneManager.LoadScene(SceneIndexes.WorldMap());
+    }
+
+
+    //Potential actions that can result from dialogue in the visitation sequences
+    public virtual void TriggerDialogueConsequences(bool[] actions)
+    {
+        //if(actions[0] == true)
+        //{
+        //    ActionZero();
+        //}
+
+        //if (actions[1] == true)
+        //{
+        //    ActionOne();
+        //}
+
+        //if (actions[2] == true)
+        //{
+        //    ActionTwo();
+        //}
+
+        //if (actions[3] == true)
+        //{
+        //    ActionThree();
+        //}
+
+        //if (actions[4] == true)
+        //{
+        //    ActionFour();
+        //}
+
+        //if (actions[5] == true)
+        //{
+        //    ActionFive();
+        //}
+
+        //if (actions[6] == true)
+        //{
+        //    ActionSix();
+        //}
+
+        //if (actions[7] == true)
+        //{
+        //    ActionSeven();
+        //}
+    }
+
+    //public void ActionZero()
+    //{
+
+    //}
+
+    //public void ActionOne()
+    //{
+
+    //}
+
+    //public void ActionTwo()
+    //{
+
+    //}
+
+    //public void ActionThree()
+    //{
+
+    //}
+
+    //public void ActionFour()
+    //{
+
+    //}
+
+    //public void ActionFive()
+    //{
+
+    //}
+
+    //public void ActionSix()
+    //{
+
+    //}
+
+    //public void ActionSeven()
+    //{
+
+    //}
+
+}
+

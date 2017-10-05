@@ -1,0 +1,18 @@
+6
+ You again? Didn't I already tell you I don't make weapons anymore?
+I just wanted to ask what made you quit./1/-1
+I decided that I'm going to force you to make me warded weapons. *THREATEN*/5/2
+Ah, right, um. . . wrong house. Sorry. *LEAVE*/6/-1
+ (He frowns silently for a while, as though considering his response. Then he sighs, and his expression softens.)/1
+*CONTINUE*/2/-1
+ Aah, fine, I might as well tell you. You may even be able to help. You see, last week my daughter ran off with this ragtag group of sailors, sailing on a vessel by the name of "Relentless". Dockworkers told me they weren't flyin' no colors, so I'm afraid they were pirates./2
+If I brought her back to you, would you make warded weapons for me?/3/-1
+Ah. I see. Sorry to have bothered you. *LEAVE*/6/3
+ You would do that for me? I mean, yes, of course I'd make you weapons, if you did something like that. Why, if you bring her back safely, I'll make you some weapons for free!/2
+It's a deal then. I bring you your daughter, you make warded weapons for me./4/4
+On second thought, that all seems like too much trouble. You'll have to find her on your own. *LEAVE*/6/3
+ You have made me a happy man, good sirs! I must warn you, however: My daughter is a little. . . wrong in the head, if you know what I mean. Has delusions, and the like. I'd recommend taking anything she tells you with a grain of salt./2
+I'll keep that in mind, thanks. *LEAVE*/6/-1
+Uh. . . right. . . *LEAVE*/6/-1
+ (The man laughs, then slams the door in your face. Etchings in the building's wooden surfaces begin to glow, and the house is surrounded by a magical aura. Even an army would be hard-pressed to get at the man now./1
+*LEAVE*/6/-1

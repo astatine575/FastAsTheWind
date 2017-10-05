@@ -1,0 +1,10 @@
+3
+ You again? What do you want?/2
+I decided that I want to help you find your daughter. In exchange for warded weapons, of course./1/-1
+Oh, sorry. Wrong house. *LEAVE*/3/-1
+ You will? I must say, good sir, this is quite good to hear! If you brought me back my daughter, why. . . I'd make you a hundred weapons!/2
+It's a deal then. I bring you back your daughter, you make me some weapons./2/4
+On second thought, that all seems like too much trouble. You'll have to find her on your own. *LEAVE*/3/-1
+ Oh, wonderful. Just wonderful! I must warn you, however: My daughter is a little. . . wrong in the head, if you know what I mean. Has delusions, and the like. I'd recommend taking anything she tells you with a grain of salt./2
+I'll keep that in mind, thanks. *LEAVE*/3/-1
+Uh. . . right. . . *LEAVE*/3/-1

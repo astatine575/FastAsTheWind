@@ -1,0 +1,3 @@
+1
+ (As you approach Aldrenn's house, you decide that it would be best not to tell him about his daughter.)/1
+*LEAVE*/1/-1

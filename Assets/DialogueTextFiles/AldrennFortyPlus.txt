@@ -1,0 +1,5 @@
+2
+ Have you found her yet?/1
+No, not yet./1/-1
+ That is. . . unfortunate. Don't come back until you have her with you. (Before you have the chance to respond, he slams the door in your face)/1
+*LEAVE*/2/-1

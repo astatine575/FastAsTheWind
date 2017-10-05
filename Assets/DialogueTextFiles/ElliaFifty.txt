@@ -1,0 +1,14 @@
+4
+ (Jon's getting pretty lazy with all these dialogue trees, so this is gonna be a little streamlined)/1
+*ACCEPT JON'S LAZINESS*/1/-1
+ (A young, slender girl with brown hair opens the door a few moments after you knock)/1
+*CONTINUE*/2/-1
+ Wow, you found me. Plot twist: I make all my the warded weapons my father takes credit for, and that's why I ran away./3
+Awesome! I'll not tell your father, and in return you can make cool weapons for me!/3/0
+Awesome! I'll not tell your father, and in return you can make cool weapons for me!/3/0
+Awesome! I'll not tell your father, and in return you can make cool weapons for me!/3/0
+ Great! See you never probably, cause we don't have weapons implemented yet!/3
+Alright, bye! *LEAVE*/4/-1
+Alright, bye! *LEAVE*/4/-1
+Alright, bye! *LEAVE*/4/-1
+

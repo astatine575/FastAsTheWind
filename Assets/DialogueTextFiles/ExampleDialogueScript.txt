@@ -1,0 +1,27 @@
+8
+ Why hello there!/3
+What the hell are you?/1/-1
+Who the hell are you?/2/-1
+Where the hell are you?/3/-1
+ Me? Why, I'm just a .txt file, made to help the programmars check the dialogue functionality./3
+Oh. Okay then./7/-1
+*ASK ANOTHER QUESTION*/4/-1
+Whatever you are, I'm gonna fight you! *Fight the .txt file*/5/0
+ Aah, what a philosophical question! Who AM I indeed? To be honest with you, I'm not really sure. I'm just here to test the game's dialogue./3
+Oh. Okay then./7/-1
+*ASK ANOTHER QUESTION*/4/-1
+Whoever you are, I'm gonna fight you! *Fight the .txt file*/5/0
+ WHERE am I, you ask? Why, I'm in the assets folder, of course! That is, unless someone messed something up. . ./3
+Oh. Okay then./7/-1
+*ASK ANOTHER QUESTION*/4/-1
+Wherever you are, I'm gonna fight you! *Fight the .txt file*/5/0
+ . . ./3
+What the hell are you?/1/-1
+Who the hell are you?/2/-1
+Where the hell are you?/3/-1
+ (You flail your arms around in the air, and look like a total jackass. Then an amused cackling echoes through the air around you, followed by a deafening crack from the direction of the harbor.)/1
+*NEXT*/6/-1
+ Try and fight ME, will you? Well, let's see if THAT teaches you a lesson, big tough pirate man./1
+*NEXT*/7/-1
+ (The presence you feel hovering over you dissipates. The .txt file has departed.)/1
+*END DIALOGUE*/8/-1
