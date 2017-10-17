@@ -13,6 +13,8 @@ public class ControlScript : MonoBehaviour {
     private CombatState combatState;
     private PlayerShipState playerShipState;
     private EnemyShipState enemyShipState;
+   
+
 
     // Use this for initialization
     void Start () {
@@ -40,6 +42,8 @@ public class ControlScript : MonoBehaviour {
         else
             PlayerController.ReturnToMap(-1 * PlayerStatus.GoldCount / 2, -1 * PlayerStatus.ResourcesCount / 2, PlayerStatus.ShipPos);
     }
+
+   
 
 
 }

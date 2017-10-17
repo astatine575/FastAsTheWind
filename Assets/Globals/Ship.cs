@@ -26,8 +26,8 @@ public class Ship {
     private readonly int _sailHealthMaxBase; // sail health of the ship without any upgrades
     public int _sailHealth; // current sail health of the ship
 
-    private int slotCount;
-    private WeaponSlot[] weaponSlots;
+    public int slotCount;
+    public WeaponSlot[] weaponSlots;
     private bool initialized = false;
 
 
@@ -45,6 +45,7 @@ public class Ship {
         _hullHealth = HullStrengthMax();
         _crewHealth = CrewStrengthMax();
         _sailHealth = SailStrengthMax();
+
 
         InitializeWeaponSlots();
     }
@@ -158,6 +159,7 @@ public class Ship {
     public WeaponSlot[] GetWeaponSlots() { return weaponSlots;}
 
     public int GetSlotNumber() { return slotCount; }
+
 }
 
 [System.Serializable]

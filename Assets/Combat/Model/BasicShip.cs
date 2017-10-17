@@ -7,5 +7,6 @@ public class BasicShip{
     
     public string shipName;
     public float shipHealth;
+    public float shipMaxHealth;
 
 }

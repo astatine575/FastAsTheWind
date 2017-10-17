@@ -29,6 +29,7 @@ public class PlayerShipState : MonoBehaviour
 
     void Start()
     {
+        player.shipMaxHealth = PlayerStatus.ShipHealthMax;
         // determine player ship health from world map
         player.shipHealth = PlayerStatus.ShipHealthCurrent;
         // First state where the weapon will count up until it can be used. Subject to change of course.
