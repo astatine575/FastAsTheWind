@@ -5972,6 +5972,7 @@ RectTransform:
   - {fileID: 501157854}
   - {fileID: 590617199}
   - {fileID: 339994074}
+  - {fileID: 1705950993}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6360,6 +6361,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e5a0a0cdeb2486cac6f448c9a3cd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1705950992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1705950993}
+  - component: {fileID: 1705950994}
+  m_Layer: 5
+  m_Name: testing the item
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1705950993
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1705950992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1558354506}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0.000015258789}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1705950994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1705950992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5dad2bc51a7c46ea9f3df9889d90c3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1848777344
 GameObject:
   m_ObjectHideFlags: 0
@@ -6728,32 +6774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9141ca8c99e438d90e883522fc4d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inven:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  InventoryButton:
-  - {fileID: 430760334}
-  - {fileID: 930081508}
-  - {fileID: 1891332177}
-  - {fileID: 1622777785}
-  - {fileID: 343818917}
-  - {fileID: 733820503}
-  - {fileID: 1463427832}
-  - {fileID: 60767636}
-  - {fileID: 201115528}
-  - {fileID: 306316622}
-  - {fileID: 1662970226}
-  - {fileID: 1472154332}
 --- !u!4 &2065678023
 Transform:
   m_ObjectHideFlags: 0
