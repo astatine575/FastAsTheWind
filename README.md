@@ -14,4 +14,4 @@ Then drag each scene into the corresponding order above to be sure the game is p
 With the build settings set up you can run the game in two ways, either select Build and Run from the Build Settings window and play the game from the generated executable, or if you want to run the game while still in Unity3D, go back to the assets tab and open again the TempMenu scene from the Menu folder.
 From there select the "Play" Button at the top of the Scene window, and that will run the game from the start up menu scene.
 
-jorgexelo95 will be beta testing. 
+jorgexelo95 will be assigned task #45
