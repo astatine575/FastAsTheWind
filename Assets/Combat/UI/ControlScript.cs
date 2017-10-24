@@ -12,13 +12,17 @@ public class ControlScript : MonoBehaviour {
     public Button ButtonFire1;
     public Button ButtonFire2;
     public Button ButtonFire3;
-    public Button ButtonEnemy;
+    public Button ButtonEnemy0;
+    public Button ButtonEnemy1;
+    public Button ButtonEnemy2;
+
     public GameObject combatManager; // points to Combat/Combat Manager
     private CombatState combatState;
     private bool IsWeaponSelected;
     private FirstCannon SelectedWeapon;
     private FirstCannon[] weapons;
     private GameObject target;
+    private string[] OrderTargets;
 
     // Use this for initialization
     void Start () {
@@ -30,7 +34,9 @@ public class ControlScript : MonoBehaviour {
         ButtonFire2 = GameObject.Find("ButtonFire2").GetComponent<Button>();
         ButtonFire3 = GameObject.Find("ButtonFire3").GetComponent<Button>();
 
-        ButtonEnemy = GameObject.Find("ButtonEnemy").GetComponent<Button>();
+        ButtonEnemy0 = GameObject.Find("ButtonEnemy0").GetComponent<Button>();
+        ButtonEnemy1 = GameObject.Find("ButtonEnemy1").GetComponent<Button>();
+        ButtonEnemy2 = GameObject.Find("ButtonEnemy2").GetComponent<Button>();
 
         ButtonEnd = GameObject.Find("ButtonEnd").GetComponent<Button>();
 
@@ -57,7 +63,9 @@ public class ControlScript : MonoBehaviour {
         if (weapons.Length > 2 & IsWeaponSelected == false) { ButtonFire2.interactable = weapons[2].CanFire(); } else ButtonFire2.interactable = false;
         if (weapons.Length > 3 & IsWeaponSelected == false) { ButtonFire3.interactable = weapons[3].CanFire(); } else ButtonFire3.interactable = false;
 
-        if (combatState.enemy.Count > 0) { ButtonEnemy.interactable = true; } else ButtonEnemy.interactable = false;
+        if (combatState.enemy.Count > 0) { ButtonEnemy0.interactable = true; } else ButtonEnemy0.interactable = false;
+        if (combatState.enemy.Count > 0) { ButtonEnemy1.interactable = true; } else ButtonEnemy1.interactable = false;
+        if (combatState.enemy.Count > 0) { ButtonEnemy2.interactable = true; } else ButtonEnemy2.interactable = false;
 
         ButtonEnd.interactable = true;
 
@@ -93,11 +101,33 @@ public class ControlScript : MonoBehaviour {
         IsWeaponSelected = true;
     }
 
-    public void buttonEnemyPressed()
+    public void buttonEnemyPressed0()
     { // called when the ButtonFire is pressed in the UI
-        target = combatState.enemy[0];
-        SelectedWeapon.Target(target);
-        IsWeaponSelected = false;
+        if (SelectedWeapon.NumOfTargets == 1) {
+            target = combatState.enemy[0];
+            SelectedWeapon.Target(target,true,false,false);
+            IsWeaponSelected = false;
+        }
+    }
+
+    public void buttonEnemyPressed1()
+    { // called when the ButtonFire is pressed in the UI
+        if (SelectedWeapon.NumOfTargets == 1)
+        {
+            target = combatState.enemy[0];
+            SelectedWeapon.Target(target, false,true,false);
+            IsWeaponSelected = false;
+        }
+    }
+
+    public void buttonEnemyPressed2()
+    { // called when the ButtonFire is pressed in the UI
+        if (SelectedWeapon.NumOfTargets == 1)
+        {
+            target = combatState.enemy[0];
+            SelectedWeapon.Target(target, false,false,true);
+            IsWeaponSelected = false;
+        }
     }
 
     public void buttonEndPressed()

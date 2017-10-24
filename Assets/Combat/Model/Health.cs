@@ -16,10 +16,14 @@ public class Health : MonoBehaviour {
         if (Self.tag == "Player")   //Check if it is attached to the player or enemy.
         {
             ShipHull = PlayerStatus.ShipHealthCurrent;
+            ShipSail = 100;
+            ShipCrew = 20;
         }
 
         else {
             ShipHull = EnemyStatus.ShipHealthCurrent;
+            ShipSail = 100;
+            ShipCrew = 10;
         }
 	}
 	

@@ -19,7 +19,7 @@ public class EnemyAI : MonoBehaviour {
         foreach (FirstCannon weapons in weapons) {      //Check each weapon if the weapon can fire. If able, fire at player.
             if (weapons.CanFire()) {
                 weapons.Fire();
-                weapons.Target(CSM.player[0]);
+                weapons.Target(CSM.player[0],true,false,false);
                 weapons.Reset();
             }
         }

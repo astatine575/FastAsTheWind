@@ -19,7 +19,7 @@ public class CombatState : MonoBehaviour {
     public bool combatOver;
     public bool playerWon;
 
-    void Start () {
+    void Start() {
         // to get a non-static reference to the ViewScript Object
         UI = (ViewScript)UIScripts.GetComponent("ViewScript");
         //Find and adds objects with the tag "Enemy" and "Player"
@@ -35,7 +35,7 @@ public class CombatState : MonoBehaviour {
         playerObject.AddComponent<BigCannon>();
 
         if (PlayerStatus.HadMoreWeapon == true) {
-            
+
             playerObject.AddComponent<SmallCannon>();
             playerObject.AddComponent<SmallCannon>();
             playerObject.AddComponent<SmallCannon>();
@@ -44,16 +44,12 @@ public class CombatState : MonoBehaviour {
 
     }
 
-	void Update () {
+    void Update() {
 
         if (Time.timeScale == 0) { return; }
 
         if (actions.Count > 0) {
-            if (actions.Peek().attackerObject.tag == "Player")
-            {
-                PlayerDoDamage(actions.Dequeue());
-            }
-            else EnemyDoDamage(actions.Dequeue());
+            DoTurn(actions.Dequeue());
         }
 
     }
@@ -63,39 +59,38 @@ public class CombatState : MonoBehaviour {
         actions.Enqueue(input);
     }
 
-    //Does damage to enemy or player. Destroy target if health is reduced to 0 or less.
-    void PlayerDoDamage(Turns input)
-    {
-        Health enemyHealth = input.targetObject.GetComponent<Health>();
-        enemyHealth.ShipHull = enemyHealth.ShipHull - input.weaponUsed.WeaponAttack;
-        PlayerStatus.AmmoCount = PlayerStatus.AmmoCount - 1;
-        input.weaponUsed.Reset();
-        UI.printToCombatLog("The " + "Player" + " dealt " + input.weaponUsed.WeaponAttack.ToString() + " damage to the " + "Enemy" + "!");
-        if (enemyHealth.ShipHull <= 0)
-        {
-            Destroy(input.targetObject);
-            enemy.Remove(input.targetObject);
-            EnemyStatus.ShipHealthCurrent = 0;
-            UI.printToCombatLog("The " + "Player" + " has sunk the " + "Enemy" + "!");
-            playerWon = true;
-            combatOver = true;
-        }
-        
+    void DoTurn(Turns input) {
+        GameObject target = input.targetObject;
+        FirstCannon weapon = input.weaponUsed;
+        weapon.DoDamage(input);
+        TextOut(input);
     }
 
-    void EnemyDoDamage(Turns input)
-    {
-        Health playerHealth = input.targetObject.GetComponent<Health>();
-        playerHealth.ShipHull = playerHealth.ShipHull - input.weaponUsed.WeaponAttack;
-        UI.printToCombatLog("The " + "Enemy" + " dealt " + input.weaponUsed.WeaponAttack.ToString() + " damage to the " + "Enemy" + "!");
-        if (playerHealth.ShipHull <= 0)
-        {
+    public void TextOut (Turns input){
+
+        Health targetHealth = input.targetObject.GetComponent<Health>();
+        if (input.targetObject.tag == "Player")
+            UI.printToCombatLog("The " + "Player" + " dealt " + input.weaponUsed.BaseAttack.ToString() + " damage to the " + "Enemy" + "!");
+        else
+            UI.printToCombatLog("The " + "Enemy" + " dealt " + input.weaponUsed.BaseAttack.ToString() + " damage to the " + "Enemy" + "!");
+
+
+        if (targetHealth.ShipHull <= 0){
             Destroy(input.targetObject);
-            player.Remove(input.targetObject);
-            PlayerStatus.ShipHealthCurrent = 0;
-            UI.printToCombatLog("The " + "Enemy" + " has sunk the " + "Player" + "!");
-            playerWon = false;
-            combatOver = true;
+            if (input.targetObject.tag == "Player") {
+                player.Remove(input.targetObject);
+                PlayerStatus.ShipHealthCurrent = 0;
+                UI.printToCombatLog("The " + "Enemy" + " has sunk the " + "Player" + "!");
+                playerWon = false;
+                combatOver = true;
+            }
+            else {
+                enemy.Remove(input.targetObject);
+                EnemyStatus.ShipHealthCurrent = 0;
+                UI.printToCombatLog("The " + "Player" + " has sunk the " + "Enemy" + "!");
+                playerWon = true;
+                combatOver = true;
+            }
         }
     }
 

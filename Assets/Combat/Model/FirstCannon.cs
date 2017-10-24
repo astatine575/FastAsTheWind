@@ -8,7 +8,17 @@ public class FirstCannon : MonoBehaviour
     public string WeaponName {get; set;}
     public float WeaponCooldown {get; set;}
     public float CurrentCooldown {get; set;}
-    public int WeaponAttack {get; set;}
+
+    public int BaseAttack {get; set;}
+    public float HullModifier {get; set;}
+    public float SailModifier {get; set;}
+    public float CrewModifier {get; set;}
+
+    public float HitRate { get; set;}
+
+    public int NumOfTargets {get; set;}
+    public bool AutoTarget {get; set;}
+
 
     private CombatState CSM;
     private GameObject self;
@@ -71,24 +81,39 @@ public class FirstCannon : MonoBehaviour
         }
     }
 
-    virtual public void Target(GameObject target)   //Selects the target for fireing.
-    {
-        if (CurrentState == States.SELECTING) {
-            CurrentState = States.QUEUE;
-            AttackTarget(target);
+    virtual public void DeselectWeapon() {
+        if (CurrentState == States.SELECTING)
+        {
+            CurrentState = States.WAITING;
         }
     }
 
-    void AttackTarget(GameObject target)    //Create a new "Turn". Assign attacker,target and weapon used. Add to the attack queue.
+    virtual public void Target(GameObject target, bool hull, bool sail, bool crew)   //Selects the target for fireing.
+
+    {
+        if (CurrentState == States.SELECTING) {
+            CurrentState = States.QUEUE;
+            AttackTarget(target, hull, sail, crew);
+        }
+    }
+
+    void AttackTarget(GameObject target, bool hull, bool sail, bool crew)    //Create a new "Turn". Assign attacker,target and weapon used. Add to the attack queue.
     {
         Turns basicAttack = new Turns
         {
             attackerObject = self,
             targetObject = target,
-            weaponUsed = this
+            weaponUsed = this,
+            Hull = hull,
+            Sail = sail,
+            Crew = crew,
         };
 
         CSM.Add(basicAttack);
+    }
+
+    virtual public void DoDamage(Turns target) {
+
     }
 
     virtual public void Reset() //Resets the weapon to 0 cooldown.
