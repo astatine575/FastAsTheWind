@@ -36,6 +36,7 @@ public class EquipShipManager : MonoBehaviour
 
     public void EquipArmament(int invSlot)
     {
+        if (!PlayerStatus.Ship.weaponSlots[invSlot].validWeapon(weaponEquipping)) return;
         PlayerStatus.Ship.weaponSlots[invSlot].Replace(weaponEquipping);
 
         //Debug.Log("Inventory:");

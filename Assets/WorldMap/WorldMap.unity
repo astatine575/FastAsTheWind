@@ -4918,6 +4918,11 @@ Prefab:
       propertyPath: armamentName
       value: 
       objectReference: {fileID: 2018093045}
+    - target: {fileID: 114186890340819774, guid: d298a719703c76c448412dbabf75f2fb,
+        type: 2}
+      propertyPath: m_Text
+      value: Armamanet
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d298a719703c76c448412dbabf75f2fb, type: 2}
   m_IsPrefabParent: 0

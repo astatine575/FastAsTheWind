@@ -27,7 +27,7 @@ public class EquipShipButton : MonoBehaviour
             shipWeapon = PlayerStatus.Ship.weaponSlots[invSlot].equippedWeapon;
             armamentName.text = shipWeapon.GetName();
         }
-        else armamentName.text = "[EMPTY]";
+        else armamentName.text = "[EMPTY" + PlayerStatus.Ship.weaponSlots[invSlot].validTypesString() + " Slot]";
 
         slot.text = "Slot " + (n + 1);
     }
