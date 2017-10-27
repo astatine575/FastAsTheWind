@@ -199,7 +199,7 @@ public class IslandAttributes : MonoBehaviour
         caller.mainPanel.SetActive(false);
         caller.linkedPanel.SetActive(true);
 
-        caller.interactionsText.text = "*The tavern is filled with rowdy drunks, singing along with a bard who looks like he'd" +
+        caller.interactionsText.text = "*The tavern is filled with rowdy drunks, singing along with a bard who looks like he'd " +
             "rather be elsewhere. The bartender greets you warmly, offering food and drinks (for an outrageous price, of course).*";
 
         activePanel = caller.linkedPanel;
