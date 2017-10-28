@@ -55,12 +55,15 @@ public class DialogueManager : MonoBehaviour
     public static int[] dActions = new int[1]; //Unless I find a better way to do this, this number will have to be changed whenever there a new dialogue-resultant method is made
 
 
-    public static void SetUpDialogue(string filePath)
+    public static void SetUpDialogue(TextAsset textFile)
     {
-        string path = filePath;
-        StreamReader dialogueReader = new StreamReader(path);
+        //string path = filePath;
+        //StreamReader dialogueReader = new StreamReader(path);
+        string textString = textFile.text;
 
-        string dialogueSizeString = GetElement(dialogueReader);
+        IEnumerator reader = textString.GetEnumerator();
+        reader.MoveNext();
+        string dialogueSizeString = GetElement(reader);
         int dialogueSize = Int32.Parse(dialogueSizeString);
         DialogueSet[] dSetArray = new DialogueSet[dialogueSize]; //This is the one variable of the public static DialogueScript class object
 
@@ -68,10 +71,10 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0; i < dSetArray.Length; i++) //For each spot in the dSetArray, create and add a dialogue set to dSetArray
         {
 
-            string gameDialogue = GetElement(dialogueReader);
+            string gameDialogue = GetElement(reader);
 
 
-            string choiceSetSizeString = GetElement(dialogueReader);
+            string choiceSetSizeString = GetElement(reader);
             int choiceSetSize = Int32.Parse(choiceSetSizeString);
             DAChoice[] choiceSet = new DAChoice[choiceSetSize];
 
@@ -82,15 +85,15 @@ public class DialogueManager : MonoBehaviour
 
                 DAChoice thisChoice = new DAChoice();
 
-                string choiceDialogue = GetElement(dialogueReader);
+                string choiceDialogue = GetElement(reader);
                 thisChoice.dialogue = choiceDialogue;
                 
 
-                string nextSetString = GetElement(dialogueReader);
+                string nextSetString = GetElement(reader);
                 thisChoice.nextSet = Int32.Parse(nextSetString);
                 
 
-                string actionString = GetElement(dialogueReader);
+                string actionString = GetElement(reader);
                 if (actionString == "-1") thisChoice.executedAction = -1;
                 else thisChoice.executedAction = Int32.Parse(actionString);
 
@@ -105,25 +108,40 @@ public class DialogueManager : MonoBehaviour
         dScript.dialogueSets = dSetArray; //Done making all sets, so dScript's dialogueSets can be set to dSetArray
     }
 
-    private static string GetElement(StreamReader reader)
+    private static string GetElement(IEnumerator reader)
     {
         string element = "";
-        char nextChar = (char)reader.Read();
-
-        while (((nextChar == '/') || (nextChar == '\n') || (nextChar == ' ')) && (reader.Peek() != -1)) //Finds start of element (forward slashes, spaces, and line breaks are ignored)
+        //if (reader.Current == null) reader.MoveNext();
+        while ((((char)reader.Current == '/') || ((char)reader.Current == '\n') || ((char)reader.Current == ' '))) //Finds start of element (forward slashes, spaces, and line breaks are ignored)
         {
-            nextChar = (char)reader.Read();
+            if(!reader.MoveNext()) return element;
+        }
+        while (((char)reader.Current != '/') && ((char)reader.Current != '\n')) //Reads element
+        {
+            element += (char)reader.Current;
+            //if (reader.Current == null) break; //Prevents infinite loops at the conclusion of reading the .txt file
+
+            if(!reader.MoveNext()) return element;
         }
 
-        while ((nextChar != '/') && (nextChar != '\n')) //Reads element
-        {
-            element += nextChar;
-
-            if (reader.Peek() == -1) break; //Prevents infinite loops at the conclusion of reading the .txt file
-
-            nextChar = (char)reader.Read();
-        }
-        //Debug.Log("Element: " + element);
         return element;
+
+        //char nextChar = (char)reader.Read();
+
+        //while (((nextChar == '/') || (nextChar == '\n') || (nextChar == ' ')) && (reader.Peek() != -1)) //Finds start of element (forward slashes, spaces, and line breaks are ignored)
+        //{
+        //    nextChar = (char)reader.Read();
+        //}
+
+        //while ((nextChar != '/') && (nextChar != '\n')) //Reads element
+        //{
+        //    element += nextChar;
+
+        //    if (reader.Peek() == -1) break; //Prevents infinite loops at the conclusion of reading the .txt file
+
+        //    nextChar = (char)reader.Read();
+        //}
+        //Debug.Log("Element: " + element);
+        //return element;
     }
 }

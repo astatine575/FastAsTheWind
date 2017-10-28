@@ -6,13 +6,13 @@ public class ValenciaAttributes : IslandAttributes
 {
     public string tavernRumor;
 
-    public string aldrennZero;
-    public string aldrennTen;
-    public string aldrennTwenty;
-    public string aldrennThirty;
-    public string aldrennFortyPlus;
-    public string aldrennHundred;
-    public string aldrennNegTen;
+    public TextAsset aldrennZero;
+    public TextAsset aldrennTen;
+    public TextAsset aldrennTwenty;
+    public TextAsset aldrennThirty;
+    public TextAsset aldrennFortyPlus;
+    public TextAsset aldrennHundred;
+    public TextAsset aldrennNegTen;
 
     private DialogueManager manager;
 
@@ -46,7 +46,7 @@ public class ValenciaAttributes : IslandAttributes
         {
             caller.mainPanel.gameObject.SetActive(false);
 
-            DialogueManager.SetUpDialogue("Assets/DialogueTextFiles/" + aldrennZero);
+            DialogueManager.SetUpDialogue(aldrennZero);
 
             DialoguePanelManager dpm = caller.dialoguePanel.GetComponent<DialoguePanelManager>();
             //dpm.currentScript = DialogueManager.dScript;
@@ -59,7 +59,7 @@ public class ValenciaAttributes : IslandAttributes
         {
             caller.mainPanel.gameObject.SetActive(false);
 
-            DialogueManager.SetUpDialogue("Assets/DialogueTextFiles/" + aldrennTen);
+            DialogueManager.SetUpDialogue(aldrennTen);
 
             DialoguePanelManager dpm = caller.dialoguePanel.GetComponent<DialoguePanelManager>();
             //dpm.currentScript = DialogueManager.dScript;
@@ -72,7 +72,7 @@ public class ValenciaAttributes : IslandAttributes
         {
             caller.mainPanel.gameObject.SetActive(false);
 
-            DialogueManager.SetUpDialogue("Assets/DialogueTextFiles/" + aldrennTwenty);
+            DialogueManager.SetUpDialogue(aldrennTwenty);
 
             DialoguePanelManager dpm = caller.dialoguePanel.GetComponent<DialoguePanelManager>();
             //dpm.currentScript = DialogueManager.dScript;
@@ -85,7 +85,7 @@ public class ValenciaAttributes : IslandAttributes
         {
             caller.mainPanel.gameObject.SetActive(false);
 
-            DialogueManager.SetUpDialogue("Assets/DialogueTextFiles/" + aldrennThirty);
+            DialogueManager.SetUpDialogue(aldrennThirty);
 
             DialoguePanelManager dpm = caller.dialoguePanel.GetComponent<DialoguePanelManager>();
             //dpm.currentScript = DialogueManager.dScript;
@@ -98,7 +98,7 @@ public class ValenciaAttributes : IslandAttributes
         {
             caller.mainPanel.gameObject.SetActive(false);
 
-            DialogueManager.SetUpDialogue("Assets/DialogueTextFiles/" + aldrennFortyPlus);
+            DialogueManager.SetUpDialogue(aldrennFortyPlus);
 
             DialoguePanelManager dpm = caller.dialoguePanel.GetComponent<DialoguePanelManager>();
             //dpm.currentScript = DialogueManager.dScript;
@@ -111,7 +111,7 @@ public class ValenciaAttributes : IslandAttributes
         {
             caller.mainPanel.gameObject.SetActive(false);
 
-            DialogueManager.SetUpDialogue("Assets/DialogueTextFiles/" + aldrennHundred);
+            DialogueManager.SetUpDialogue(aldrennHundred);
 
             DialoguePanelManager dpm = caller.dialoguePanel.GetComponent<DialoguePanelManager>();
             //dpm.currentScript = DialogueManager.dScript;
@@ -124,7 +124,7 @@ public class ValenciaAttributes : IslandAttributes
         {
             caller.mainPanel.gameObject.SetActive(false);
 
-            DialogueManager.SetUpDialogue("Assets/DialogueTextFiles/" + aldrennNegTen);
+            DialogueManager.SetUpDialogue(aldrennNegTen);
 
             DialoguePanelManager dpm = caller.dialoguePanel.GetComponent<DialoguePanelManager>();
             //dpm.currentScript = DialogueManager.dScript;
