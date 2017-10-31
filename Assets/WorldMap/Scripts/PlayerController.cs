@@ -10,12 +10,15 @@ public class PlayerController : MonoBehaviour {
     public float speedMult;
     public int depletionRate;
     public float encounterChance;
+    public int waitTime;
+    public float fadeSpeed;
 
     public Text islandID;
     public Text resourcesCount;
     public Text goldCount;
     public Text deathAlert;
     public Text enterPrompt;
+    public Text eventText;
 
     public GameObject statsPanel;
     public GameObject savePanel;
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour {
 
         PlayerStatus.PlayerControllerRef = (PlayerController)gameObject.GetComponent(typeof(PlayerController));
 
-
+        if (PlayerStatus.Beginning) StartCoroutine(FadeTutorial());
     }
 
     private void Update()
@@ -174,6 +177,68 @@ public class PlayerController : MonoBehaviour {
         }
 
         PlayerStatus.ShipPos = transform.position;
+    }
+
+    private IEnumerator FadeTutorial()
+    {
+        PlayerStatus.Beginning = false;
+        //Fade in first instruction
+        eventText.color = new Color(eventText.color.r, eventText.color.g, eventText.color.b, 0);
+        eventText.text = "Use WASD keys to move";
+
+        while (eventText.color.a < 1)
+        {
+            eventText.color = new Color(eventText.color.r, eventText.color.g, eventText.color.b, eventText.color.a + (Time.deltaTime * fadeSpeed));
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(waitTime);
+        //Fade out first instruction
+        while (eventText.color.a > 0)
+        {
+            eventText.color = new Color(eventText.color.r, eventText.color.g, eventText.color.b, eventText.color.a - (Time.deltaTime * fadeSpeed));
+
+            yield return null;
+        }
+        //Fade in second instruction
+        eventText.color = new Color(eventText.color.r, eventText.color.g, eventText.color.b, 0);
+        eventText.text = "Use tab to view stats and inventory";
+
+        while (eventText.color.a < 1)
+        {
+            eventText.color = new Color(eventText.color.r, eventText.color.g, eventText.color.b, eventText.color.a + (Time.deltaTime * fadeSpeed));
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(waitTime);
+        //Fade out second instruction
+        while (eventText.color.a > 0)
+        {
+            eventText.color = new Color(eventText.color.r, eventText.color.g, eventText.color.b, eventText.color.a - (Time.deltaTime * fadeSpeed));
+
+            yield return null;
+        }
+        //Fade in third instruction
+        eventText.color = new Color(eventText.color.r, eventText.color.g, eventText.color.b, 0);
+        eventText.text = "Use esc to open the game menu";
+
+        while (eventText.color.a < 1)
+        {
+            eventText.color = new Color(eventText.color.r, eventText.color.g, eventText.color.b, eventText.color.a + (Time.deltaTime * fadeSpeed));
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(waitTime);
+        //Fade out third instruction
+        while (eventText.color.a > 0)
+        {
+            eventText.color = new Color(eventText.color.r, eventText.color.g, eventText.color.b, eventText.color.a - (Time.deltaTime * fadeSpeed));
+
+            yield return null;
+        }
     }
 
     private void SetResources()

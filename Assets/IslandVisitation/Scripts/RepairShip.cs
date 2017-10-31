@@ -19,19 +19,19 @@ public class RepairShip : MonoBehaviour {
     // Use this for initialization
     public void OnClickRepairShip()
     {
-        int cost = PlayerStatus.ShipHealthMax - PlayerStatus.ShipHealthCurrent;
+        int cost = PlayerStatus.Ship._hullHealth - PlayerStatus.Ship.HullStrengthMax();
 
-        if (PlayerStatus.ShipHealthCurrent == PlayerStatus.ShipHealthMax)
+        if (PlayerStatus.Ship._hullHealth == PlayerStatus.Ship.HullStrengthMax())
             interactionsText.text = "She looks fine to me, mate.";
         else if (cost > PlayerStatus.GoldCount) interactionsText.text = "Come back when you have some gold." +
                 "I don't work for free, you know.";
         else
         {
             PlayerStatus.GoldCount -= cost;
-            PlayerStatus.ShipHealthCurrent = PlayerStatus.ShipHealthMax;
+            PlayerStatus.Ship._hullHealth = PlayerStatus.Ship.HullStrengthMax();
 
             goldCountText.text = "Gold: " + PlayerStatus.GoldCount.ToString();
-            relevantStatText.text = "Ship Health: " + PlayerStatus.ShipHealthCurrent + "/" + PlayerStatus.ShipHealthMax;
+            relevantStatText.text = "Ship Health: " + PlayerStatus.Ship._hullHealth + "/" + PlayerStatus.Ship.HullStrengthMax();
 
             interactionsText.text = "There you go. Good as new.";
         }

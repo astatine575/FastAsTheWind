@@ -28,6 +28,7 @@ public class IslandAttributes : MonoBehaviour
 
     [HideInInspector]
     public Inventory shopInventory;
+    public Inventory gunsmithInventory;
 
     // Use this for initialization
     public virtual void Start()
@@ -114,6 +115,7 @@ public class IslandAttributes : MonoBehaviour
 
     public virtual void ShopSetup()
     {
+        //Market shop
         shopInventory = new Inventory();
 
         shopInventory.AddItem(new CrewWeapon(
@@ -132,6 +134,26 @@ public class IslandAttributes : MonoBehaviour
                                             Consumable.Effect.HEAL,         // effect
                                             10),                            // magnitude
                                             4);                             // quantity
+        //Gunsmith shop
+        gunsmithInventory = new Inventory();
+
+        gunsmithInventory.AddItem(new Ammunition(
+                                            "Explosive Round",             // name
+                                            "Filled to the brim with brimstone, these cannonballs violently explode on impact, greviously wounding enemy crew.", // description
+                                            2,                             // value
+                                            Ammunition.AmmoType.CANNONBALL, // weapon material
+                                            1,                              // hull damage multiplier
+                                            3,                              // crew damage multiplier
+                                            1),                             // sail damage multiplier
+                                            500);                           // quantity
+        gunsmithInventory.AddItem(new ShipWeapon(
+                                        "Basic Cannon",   // name
+                                        "The old and reliable 20mm naval gun, a common weapon used by merchant, pirate, and naval vessels alike.", // description
+                                        125,                             // value
+                                        ShipWeapon.WeaponType.CANNON,   // weapon type
+                                        Ammunition.AmmoType.CANNONBALL, // ammo type
+                                        2,                              // cooldown
+                                        10));                           // damage
     }
 
     //What the buttons in the visitation scene do, which can be overwritten by a subclass of IslandAttributes
@@ -164,7 +186,7 @@ public class IslandAttributes : MonoBehaviour
         caller.linkedPanel.SetActive(true);
 
         caller.goldCountText.text = "Gold: " + PlayerStatus.GoldCount;
-        caller.relevantStatText.text = "Cannonballs: " + PlayerStatus.AmmoCount.ToString();
+        caller.relevantStatText.text = "";//"Cannonballs: " + PlayerStatus.AmmoCount.ToString();
         caller.interactionsText.text = "Looking to defend yourself, huh? I got just the thing.";
 
         activePanel = caller.linkedPanel;
@@ -210,13 +232,13 @@ public class IslandAttributes : MonoBehaviour
         caller.mainPanel.SetActive(false);
         caller.linkedPanel.SetActive(true);
 
-        if (PlayerStatus.ShipHealthCurrent == PlayerStatus.ShipHealthMax)
+        if (PlayerStatus.Ship._hullHealth == PlayerStatus.Ship.HullStrengthMax())
             caller.interactionsText.text = "Looking to upgrade your ship, eh?";
         else caller.interactionsText.text = "Yer ship's lookin' a little rough there. " +
                 "Want me to patch 'er up fer ya?";
 
         caller.goldCountText.text = "Gold: " + PlayerStatus.GoldCount;
-        caller.relevantStatText.text = "Ship Health: " + PlayerStatus.ShipHealthCurrent + "/" + PlayerStatus.ShipHealthMax;
+        caller.relevantStatText.text = "Ship Health: " + PlayerStatus.Ship._hullHealth + "/" + PlayerStatus.Ship.HullStrengthMax();
 
         activePanel = caller.linkedPanel;
     }
@@ -235,6 +257,7 @@ public class IslandAttributes : MonoBehaviour
     //Potential actions that can result from dialogue in the visitation sequences
     public virtual void TriggerDialogueConsequences(bool[] actions)
     {
+        //These are just here to quickly create them in child classes
         //if(actions[0] == true)
         //{
         //    ActionZero();

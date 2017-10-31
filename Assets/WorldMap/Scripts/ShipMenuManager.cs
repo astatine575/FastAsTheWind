@@ -12,8 +12,8 @@ public class ShipMenuManager : MonoBehaviour
 
     private void OnEnable()
     {
-        healthDisplay.text = PlayerStatus.ShipHealthCurrent + "/" + PlayerStatus.ShipHealthMax;
-        ammunitionsDisplay.text = PlayerStatus.AmmoCount.ToString();
+        healthDisplay.text = PlayerStatus.Ship._hullHealth + "/" + PlayerStatus.Ship.HullStrengthMax();
+        ammunitionsDisplay.text = ""; //PlayerStatus.AmmoCount.ToString();
     }
 
     private void OnDisable()

@@ -11,9 +11,9 @@ public class TempStartGame : MonoBehaviour {
         PlayerStatus.ResourcesCount = 100;
         PlayerStatus.GoldCount = 100;
         PlayerStatus.ShipPos = new Vector3(0, 0, 0);
-        PlayerStatus.ShipHealthMax = 100;
-        PlayerStatus.ShipHealthCurrent = 100;
-        PlayerStatus.AmmoCount = 20;
+        PlayerStatus.Beginning = true;
+        //PlayerStatus.ShipHealthCurrent = 100;
+        //PlayerStatus.AmmoCount = 20; //Remove this once AmmoCount is phased out of all code
 
         QuestsStatus.testQuestStatus = -1;
 
@@ -30,7 +30,7 @@ public class TempStartGame : MonoBehaviour {
                                           10,                               // base/necessary crew health/count
                                           50                                // base sail health
             );
-
+        PlayerStatus.Ship._hullHealth = PlayerStatus.Ship.HullStrengthMax();
         //for (int i = 0; i < 10; i++)
         //    PlayerStatus.Inventory.AddItem(new CrewWeapon(
         //                                    "Sword",                        // name
@@ -44,7 +44,7 @@ public class TempStartGame : MonoBehaviour {
         //    PlayerStatus.Inventory.AddItem(new ShipWeapon(
         //                                    "Basic Cannon",   // name
         //                                    "The old and reliable 20mm naval gun, a common weapon used by merchant, pirate, and naval vessels alike.", // description
-        //                                    50,                             // value
+        //                                    125,                             // value
         //                                    ShipWeapon.WeaponType.CANNON,   // weapon type
         //                                    Ammunition.AmmoType.CANNONBALL, // ammo type
         //                                    2,                              // cooldown
@@ -56,14 +56,14 @@ public class TempStartGame : MonoBehaviour {
         //                                    Consumable.Effect.HEAL,         // effect
         //                                    10),                            // magnitude
         //                                    4);                             // quantity
-        //PlayerStatus.Inventory.AddItem(new Ammunition(
-        //                                    "Explosive Rounds",             // name
-        //                                    "Filled to the brim with brimstone, these cannonballs violently explode on impact, greviously wounding enemy crew.", // description
-        //                                    1,                             // value
-        //                                    Ammunition.AmmoType.CANNONBALL, // weapon material
-        //                                    1,                              // hull damage multiplier
-        //                                    3,                              // crew damage multiplier
-        //                                    1),                             // sail damage multiplier
-        //                                    100);                           // quantity
+        PlayerStatus.Inventory.AddItem(new Ammunition(
+                                            "Explosive Round",             // name
+                                            "Filled to the brim with brimstone, these cannonballs violently explode on impact, greviously wounding enemy crew.", // description
+                                            2,                             // value
+                                            Ammunition.AmmoType.CANNONBALL, // weapon material
+                                            1,                              // hull damage multiplier
+                                            3,                              // crew damage multiplier
+                                            1),                             // sail damage multiplier
+                                            100);                           // quantity
     }
 }

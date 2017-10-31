@@ -8,7 +8,7 @@ public class SwitchPanels : MonoBehaviour
     public Button thisButton;
 
     public GameObject thisPanel;
-    public GameObject purchaseResourcesPanel;
+    public GameObject destinationPanel;
 
 
 	void Start ()
@@ -18,8 +18,18 @@ public class SwitchPanels : MonoBehaviour
 	
 	private void OnClickSwitch()
     {
+        ShopPanelManager panelScript = destinationPanel.GetComponent<ShopPanelManager>();
+        if(panelScript != null)
+        {
+            panelScript.returnPanel = thisPanel;
+            if (thisPanel.CompareTag("Market")) panelScript.inventory = PlayerStatus.VisitingIsland.shopInventory;
+            else if (thisPanel.CompareTag("Gunsmith")) panelScript.inventory = PlayerStatus.VisitingIsland.gunsmithInventory;
+            else return;
+        }
+        
+
         thisPanel.gameObject.SetActive(false);
-        purchaseResourcesPanel.gameObject.SetActive(true);
+        destinationPanel.gameObject.SetActive(true);
     }
 
 }

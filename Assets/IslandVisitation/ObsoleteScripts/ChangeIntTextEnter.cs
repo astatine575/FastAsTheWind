@@ -28,13 +28,9 @@ public class ChangeIntTextEnter : MonoBehaviour {
 
         string statDisplay;
 
-       if (displayedStat == "Resources")
+        if (displayedStat == "Resources")
         {
             statDisplay = PlayerStatus.ResourcesCount.ToString();
-        }
-        else if (displayedStat == "Cannonballs")
-        {
-            statDisplay = PlayerStatus.AmmoCount.ToString();
         }
         else statDisplay = "error";
 

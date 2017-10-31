@@ -12,6 +12,11 @@ public class Inventory
     public void AddItem(GameItem item, int quantity = 1)
     {
         int index = inventoryList.FindIndex(x => x.GetName().Equals(item.GetName(), StringComparison.Ordinal)); // in short, looks for a GameItem in inventory with same name as item
+        //inventoryList.FindAll( x => x.GetItemType().Equals("Ammunition"));
+
+        //foreach (GameItem x in inventoryList)
+        //    quantity += x.quantity;
+
 
         if (index >= 0) //If true, then will return if the item can be placed not at the end of the array
         {
@@ -41,10 +46,10 @@ public class Inventory
         else
         {
             inventoryList.Insert(inventoryList.Count, item);
-            item.invLoc = inventoryList.Count-1;
+            item.invLoc = inventoryList.Count - 1;
             if (item.GetStackable())
             {
-                inventoryList[inventoryList.Count-1].quantity = quantity;
+                inventoryList[inventoryList.Count - 1].quantity = quantity;
                 size += quantity;
                 //Debug.Log("Added " + quantity.ToString() + " " + item.GetName() + "(s) to player inventory");
             }

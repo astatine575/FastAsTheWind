@@ -7,11 +7,15 @@ public class ShopPanelManager : MonoBehaviour {
 
     public GameObject invLayoutPanel;
     public GameObject invItemButton;
+
+    [HideInInspector]
+    public Inventory inventory;
+    public GameObject returnPanel;
     
     void OnEnable()
     {
 
-        foreach (GameItem thisItem in PlayerStatus.VisitingIsland.GetShop().inventoryList)
+        foreach (GameItem thisItem in inventory.inventoryList)
         {
             if (thisItem.quantity != 0)
             {

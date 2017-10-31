@@ -24,4 +24,6 @@ public class PlayerStatus
     public static ArrayList VisitedIslands = new ArrayList();
 
     public static PlayerController PlayerControllerRef { get; set; }
+
+    public static bool Beginning = false;
 }

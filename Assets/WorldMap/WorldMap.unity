@@ -1038,10 +1038,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 629176304f3378649b67bb5366332125, type: 3}
-    m_FontSize: 14
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 2
     m_AlignByGeometry: 0
@@ -2427,11 +2427,14 @@ MonoBehaviour:
   speedMult: 15
   depletionRate: 15
   encounterChance: 0.0001
+  waitTime: 1
+  fadeSpeed: 0.5
   islandID: {fileID: 1196948940}
   resourcesCount: {fileID: 323940803}
   goldCount: {fileID: 1757452256}
   deathAlert: {fileID: 1345089213}
   enterPrompt: {fileID: 589394452}
+  eventText: {fileID: 0}
   statsPanel: {fileID: 1512019996}
   savePanel: {fileID: 1867257848}
   visitationSceneIndex: 3
@@ -4694,10 +4697,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 629176304f3378649b67bb5366332125, type: 3}
-    m_FontSize: 14
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0

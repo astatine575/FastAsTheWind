@@ -18,12 +18,12 @@ public class ChangeIntTextShipswright : MonoBehaviour {
 
     public void OnClickChangeText()
     {
-        if (PlayerStatus.ShipHealthCurrent == PlayerStatus.ShipHealthMax)
+        if (PlayerStatus.Ship._hullHealth == PlayerStatus.Ship.HullStrengthMax())
             interactionsText.text = "Looking to upgrade your ship, eh?";
         else interactionsText.text = "Yer ship's lookin' a little rough there. " +
                 "Want me to patch 'er up fer ya?";
 
         goldCountText.text = "Gold: " + PlayerStatus.GoldCount.ToString();
-        relevantStatText.text = "Ship Health: " + PlayerStatus.ShipHealthCurrent + "/" + PlayerStatus.ShipHealthMax;
+        relevantStatText.text = "Hull Health: " + PlayerStatus.Ship._hullHealth + "/" + PlayerStatus.Ship.HullStrengthMax();
     }
 }
