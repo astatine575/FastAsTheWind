@@ -8,12 +8,12 @@ public class BigCannon : FirstCannon {
         WeaponName = "Big Cannon";
         WeaponCooldown = 5f;
         CurrentCooldown = 0f;
-        BaseAttack = 10;
+        BaseAttack = 50;
         HullModifier = 1f;
         SailModifier = .5f;
         CrewModifier = 0f;
         HitRate = .75f;
-        NumOfTargets = 2;
+        NumOfTargets = 1;
         AutoTarget = false;
 
     }

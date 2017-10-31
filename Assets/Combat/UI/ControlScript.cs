@@ -63,9 +63,9 @@ public class ControlScript : MonoBehaviour {
         if (weapons.Length > 2 & IsWeaponSelected == false) { ButtonFire2.interactable = weapons[2].CanFire(); } else ButtonFire2.interactable = false;
         if (weapons.Length > 3 & IsWeaponSelected == false) { ButtonFire3.interactable = weapons[3].CanFire(); } else ButtonFire3.interactable = false;
 
-        if (combatState.enemy.Count > 0) { ButtonEnemy0.interactable = true; } else ButtonEnemy0.interactable = false;
-        if (combatState.enemy.Count > 0) { ButtonEnemy1.interactable = true; } else ButtonEnemy1.interactable = false;
-        if (combatState.enemy.Count > 0) { ButtonEnemy2.interactable = true; } else ButtonEnemy2.interactable = false;
+        if (combatState.enemy.Count > 0 & IsWeaponSelected == true) { ButtonEnemy0.interactable = true; } else ButtonEnemy0.interactable = false;
+        if (combatState.enemy.Count > 0 & IsWeaponSelected == true) { ButtonEnemy1.interactable = true; } else ButtonEnemy1.interactable = false;
+        if (combatState.enemy.Count > 0 & IsWeaponSelected == true) { ButtonEnemy2.interactable = true; } else ButtonEnemy2.interactable = false;
 
         ButtonEnd.interactable = true;
 
