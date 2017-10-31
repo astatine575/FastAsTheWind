@@ -29,6 +29,8 @@ public class Health : MonoBehaviour {
 	
 	void Update () {
 
+        Debug.Log(ShipHull);
+
         if (Self.tag == "Player")
         {
             PlayerStatus.ShipHealthCurrent = ShipHull;

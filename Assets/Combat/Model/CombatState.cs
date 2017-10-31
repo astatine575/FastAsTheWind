@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class CombatState : MonoBehaviour {
 
-    //Queue of attacks
-    public Queue<Turns> actions = new Queue<Turns>();
-    //List of the player ships.
-    public List<GameObject> player = new List<GameObject>();
-    //List of enemys.
-    public List<GameObject> enemy = new List<GameObject>();
-    // reference to UI script
-    public GameObject UIScripts; // to get a non-static reference to the ViewScript Object
-    private ViewScript UI;
+    public Queue<Turns> actions = new Queue<Turns>();   //Queue of attacks
+    public List<GameObject> player = new List<GameObject>();     //List of the players.
+    public List<GameObject> enemy = new List<GameObject>(); //List of enemies.
+    public GameObject UIScripts;    // reference to UI script
+    private ViewScript UI;  // to get a non-static reference to the ViewScript Object
 
     private GameObject playerObject;
 
@@ -33,6 +29,7 @@ public class CombatState : MonoBehaviour {
         playerObject = player[0];
 
         playerObject.AddComponent<BigCannon>();
+        
 
         if (PlayerStatus.HadMoreWeapon == true) {
 
@@ -40,8 +37,6 @@ public class CombatState : MonoBehaviour {
             playerObject.AddComponent<SmallCannon>();
             playerObject.AddComponent<SmallCannon>();
         }
-
-
     }
 
     void Update() {
@@ -67,16 +62,19 @@ public class CombatState : MonoBehaviour {
     }
 
     public void TextOut (Turns input){
-
         Health targetHealth = input.targetObject.GetComponent<Health>();
+
         if (input.targetObject.tag == "Player")
+
             UI.printToCombatLog("The " + "Player" + " dealt " + input.weaponUsed.BaseAttack.ToString() + " damage to the " + "Enemy" + "!");
         else
+
             UI.printToCombatLog("The " + "Enemy" + " dealt " + input.weaponUsed.BaseAttack.ToString() + " damage to the " + "Enemy" + "!");
 
-
         if (targetHealth.ShipHull <= 0){
+
             Destroy(input.targetObject);
+
             if (input.targetObject.tag == "Player") {
                 player.Remove(input.targetObject);
                 PlayerStatus.ShipHealthCurrent = 0;
@@ -84,6 +82,7 @@ public class CombatState : MonoBehaviour {
                 playerWon = false;
                 combatOver = true;
             }
+
             else {
                 enemy.Remove(input.targetObject);
                 EnemyStatus.ShipHealthCurrent = 0;

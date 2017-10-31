@@ -8,33 +8,40 @@ public class BigCannon : FirstCannon {
         WeaponName = "Big Cannon";
         WeaponCooldown = 5f;
         CurrentCooldown = 0f;
-        BaseAttack = 50;
+        BaseAttack = 10;
         HullModifier = 1f;
         SailModifier = .5f;
         CrewModifier = 0f;
         HitRate = .75f;
-        NumOfTargets = 1;
+        NumOfTargets = 2;
         AutoTarget = false;
+
     }
 
     public override void DoDamage(Turns target)
     {
-        if (target.Hull)
-        {
-            target.targetObject.GetComponent<Health>().ShipHull -= BaseAttack;
-        }
 
-        if (target.Sail)
-        {
-            target.targetObject.GetComponent<Health>().ShipSail -= BaseAttack;
-        }
+        for (int i = 0; i < target.TargetOrder.Count; i++) {
 
-        if (target.Crew)
-        {
-            target.targetObject.GetComponent<Health>().ShipCrew -= BaseAttack;
+
+            if (target.TargetOrder[i] == "HULL") {
+                target.targetObject.GetComponent<Health>().ShipHull -= BaseAttack;
+            }
+
+            if (target.TargetOrder[i] == "SAIL")
+            {
+                target.targetObject.GetComponent<Health>().ShipSail -= BaseAttack;
+            }
+
+            if (target.TargetOrder[i] == "CREW")
+            {
+                target.targetObject.GetComponent<Health>().ShipCrew -= BaseAttack;
+            }
+
         }
 
         Reset();
+
 
     }
 }

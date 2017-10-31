@@ -19,16 +19,24 @@ public class SmallCannon : FirstCannon {
 
     public override void DoDamage(Turns target)
     {
-        if (target.Hull) {
-            target.targetObject.GetComponent<Health>().ShipHull -= BaseAttack;
-        }
+        for (int i = 0; i < target.TargetOrder.Count; i++)
+        {
 
-        if (target.Sail) {
-            target.targetObject.GetComponent<Health>().ShipSail -= BaseAttack;
-        }
+            if (target.TargetOrder[i] == "HULL")
+            {
+                target.targetObject.GetComponent<Health>().ShipHull -= BaseAttack;
+            }
 
-        if (target.Crew) {
-            target.targetObject.GetComponent<Health>().ShipCrew -= BaseAttack;
+            if (target.TargetOrder[i] == "SAIL")
+            {
+                target.targetObject.GetComponent<Health>().ShipSail -= BaseAttack;
+            }
+
+            if (target.TargetOrder[i] == "CREW")
+            {
+                target.targetObject.GetComponent<Health>().ShipCrew -= BaseAttack;
+            }
+
         }
 
         Reset();

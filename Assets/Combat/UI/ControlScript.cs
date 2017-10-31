@@ -22,7 +22,7 @@ public class ControlScript : MonoBehaviour {
     private FirstCannon SelectedWeapon;
     private FirstCannon[] weapons;
     private GameObject target;
-    private string[] OrderTargets;
+    public List<string> OrderTargets;
 
     // Use this for initialization
     void Start () {
@@ -75,39 +75,59 @@ public class ControlScript : MonoBehaviour {
     }
 
     public void buttonFirePressed0 () { // called when the ButtonFire is pressed in the UI
-        weapons[0].Fire();
+        weapons[0].SelectWeapon();
         SelectedWeapon = weapons[0];
         IsWeaponSelected = true;
     }
 
     public void buttonFirePressed1()
     { // called when the ButtonFire is pressed in the UI
-        weapons[1].Fire();
+        weapons[1].SelectWeapon();
         SelectedWeapon = weapons[1];
         IsWeaponSelected = true;
     }
 
     public void buttonFirePressed2()
     { // called when the ButtonFire is pressed in the UI
-        weapons[2].Fire();
+        weapons[2].SelectWeapon();
         SelectedWeapon = weapons[2];
         IsWeaponSelected = true;
     }
 
     public void buttonFirePressed3()
     { // called when the ButtonFire is pressed in the UI
-        weapons[3].Fire();
+        weapons[3].SelectWeapon();
         SelectedWeapon = weapons[3];
         IsWeaponSelected = true;
     }
 
     public void buttonEnemyPressed0()
     { // called when the ButtonFire is pressed in the UI
-        if (SelectedWeapon.NumOfTargets == 1) {
+        if (SelectedWeapon.NumOfTargets == 1)
+        {
             target = combatState.enemy[0];
-            SelectedWeapon.Target(target,true,false,false);
+            List<string> copy = new List<string>(OrderTargets);
+            copy.Add("HULL");
+            SelectedWeapon.Target(target,copy);
             IsWeaponSelected = false;
         }
+
+        if (SelectedWeapon.NumOfTargets == 2 & OrderTargets.Count == 1)
+        {
+            target = combatState.enemy[0];
+            List<string> copy = new List<string>(OrderTargets);
+            copy.Add("HULL");
+            SelectedWeapon.Target(target, copy);
+            IsWeaponSelected = false;
+            OrderTargets.Clear();
+        }
+
+        else {
+            OrderTargets.Add("HULL");
+        }
+
+
+
     }
 
     public void buttonEnemyPressed1()
@@ -115,8 +135,25 @@ public class ControlScript : MonoBehaviour {
         if (SelectedWeapon.NumOfTargets == 1)
         {
             target = combatState.enemy[0];
-            SelectedWeapon.Target(target, false,true,false);
+            List<string> copy = new List<string>(OrderTargets);
+            copy.Add("SAIL");
+            SelectedWeapon.Target(target,copy);
+            OrderTargets.Clear();
             IsWeaponSelected = false;
+        }
+
+        if (SelectedWeapon.NumOfTargets == 2 & OrderTargets.Count == 1)
+        {
+            target = combatState.enemy[0];
+            List<string> copy = new List<string>(OrderTargets);
+            copy.Add("SAIL");
+            SelectedWeapon.Target(target, copy);
+            IsWeaponSelected = false;
+            OrderTargets.Clear();
+        }
+        else
+        {
+            OrderTargets.Add("SAIL");
         }
     }
 
@@ -125,8 +162,25 @@ public class ControlScript : MonoBehaviour {
         if (SelectedWeapon.NumOfTargets == 1)
         {
             target = combatState.enemy[0];
-            SelectedWeapon.Target(target, false,false,true);
+            List<string> copy = new List<string>(OrderTargets);
+            copy.Add("CREW");
+            SelectedWeapon.Target(target,copy);
+            OrderTargets.Clear();
             IsWeaponSelected = false;
+        }
+
+        if (SelectedWeapon.NumOfTargets == 2 & OrderTargets.Count == 1)
+        {
+            target = combatState.enemy[0];
+            List<string> copy = new List<string>(OrderTargets);
+            copy.Add("CREW");
+            SelectedWeapon.Target(target, copy);
+            IsWeaponSelected = false;
+            OrderTargets.Clear();
+        }
+        else
+        {
+            OrderTargets.Add("CREW");
         }
     }
 

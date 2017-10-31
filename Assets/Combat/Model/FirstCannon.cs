@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirstCannon : MonoBehaviour
+public abstract class FirstCannon : MonoBehaviour
 {
 
     public string WeaponName {get; set;}
@@ -18,30 +18,31 @@ public class FirstCannon : MonoBehaviour
 
     public int NumOfTargets {get; set;}
     public bool AutoTarget {get; set;}
-
-
     private CombatState CSM;
-    private GameObject self;
+    private GameObject Self;
 
-    public enum States      //The states the weapon can be in.
+    public enum States  //The states the weapon can be in.
      {
        PROCESSING,
        WAITING,
        SELECTING,
        QUEUE,
        ACTION,
+       PAUSED,
        DEAD
      }
 
     public States CurrentState;
+    public States PausedState;
 
     protected virtual void Start () {
         CurrentState = States.PROCESSING;
         CSM = GameObject.Find("Combat Manager").GetComponent<CombatState>();
-        self = this.gameObject;
+        Self = this.gameObject;
     }
 	
 	protected virtual void Update () {
+
 
         switch (CurrentState)   //Switch between the states. 
         {
@@ -65,7 +66,7 @@ public class FirstCannon : MonoBehaviour
         }
     }
 
-    void AdvanceCooldown()  //Advance the cooldown of the weapon until it reached WeaponCooldown. Switch states when it is finished.
+    private void AdvanceCooldown()  //Advance the cooldown of the weapon until it reached WeaponCooldown. Switch states when it is finished.
     {
         CurrentCooldown = CurrentCooldown + Time.deltaTime;
         if (CurrentCooldown >= WeaponCooldown)
@@ -73,48 +74,45 @@ public class FirstCannon : MonoBehaviour
             CurrentState = States.WAITING;
         }
     }
-
-   virtual public void Fire()   //Ready the weapon for fireing.
+    
+    public bool CanFire()   //Tells if the weapon can fire, returns true if able, false otherwise.
     {
-        if (CurrentState == States.WAITING) {
+        return (CurrentState == States.WAITING && PlayerStatus.AmmoCount > 0);
+    }
+
+    public void SelectWeapon()  //Ready the weapon for fireing.
+    {
+        if (CurrentState == States.WAITING)
+        {
             CurrentState = States.SELECTING;
         }
     }
 
-    virtual public void DeselectWeapon() {
+    public void DeselectWeapon()    //If you want to switch weapons.
+    {
         if (CurrentState == States.SELECTING)
         {
             CurrentState = States.WAITING;
         }
     }
 
-    virtual public void Target(GameObject target, bool hull, bool sail, bool crew)   //Selects the target for fireing.
+    virtual public void Target(GameObject target, List<string> targetOrder) //Add the current turn to the queue.
 
     {
         if (CurrentState == States.SELECTING) {
             CurrentState = States.QUEUE;
-            AttackTarget(target, hull, sail, crew);
+            Turns basicAttack = new Turns
+            {
+                attackerObject = Self,
+                targetObject = target,
+                weaponUsed = this,
+                TargetOrder = targetOrder,
+            };
+            CSM.Add(basicAttack);
         }
     }
 
-    void AttackTarget(GameObject target, bool hull, bool sail, bool crew)    //Create a new "Turn". Assign attacker,target and weapon used. Add to the attack queue.
-    {
-        Turns basicAttack = new Turns
-        {
-            attackerObject = self,
-            targetObject = target,
-            weaponUsed = this,
-            Hull = hull,
-            Sail = sail,
-            Crew = crew,
-        };
-
-        CSM.Add(basicAttack);
-    }
-
-    virtual public void DoDamage(Turns target) {
-
-    }
+    public abstract void DoDamage(Turns target);
 
     virtual public void Reset() //Resets the weapon to 0 cooldown.
     {
@@ -122,9 +120,4 @@ public class FirstCannon : MonoBehaviour
         CurrentState = States.PROCESSING;
     }
 
-    //tells player ship to make an attack. returns true if attack is made, false if on cooldown 
-    virtual public bool CanFire() // returns true if allowed to attack
-    {
-        return (CurrentState == States.WAITING && PlayerStatus.AmmoCount > 0);
-    }
 }

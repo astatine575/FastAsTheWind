@@ -10,9 +10,7 @@ public class Turns{
     public GameObject attackerObject;
     public GameObject targetObject;
     public FirstCannon weaponUsed;
-    public bool Hull;
-    public bool Sail;
-    public bool Crew;
+    public List<string> TargetOrder;
    
 
 }
