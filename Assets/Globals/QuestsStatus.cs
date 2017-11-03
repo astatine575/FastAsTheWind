@@ -10,7 +10,7 @@ public class QuestsStatus : MonoBehaviour
 
     public void NewGame()
     {
-        Debug.Log("Start gaem");
+        
         testQuestStatus = -1; //Do this for all quest statuses
     }
 }

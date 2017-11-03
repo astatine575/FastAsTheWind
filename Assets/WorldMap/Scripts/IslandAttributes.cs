@@ -19,28 +19,29 @@ public class IslandAttributes : MonoBehaviour
     public string specialText; //Not necessary if not an island with a special button
     public string specInfo;
     public string specInfoResponse;
-    public int actions;
+    private int actions;
 
     private GameObject activePanel;
 
     public bool specialVisible;
-    private bool isDiscovered;
+    // private static bool isDiscovered;
 
+    [HideInInspector]
+    public Inventory shopInventory;
 
     // Use this for initialization
     public virtual void Start()
     {
         specialVisible = false;
-        actions = 0;
-        isDiscovered = false;
+        SetActions(0);
+        //isDiscovered = false;
         specialVisible = false;
         transform.position = IslandStats.IslandLocations[islandID];
+
+        //Adding items to inventory
+        ShopSetup();
     }
 
-    public void Default()
-    {
-
-    }
 
     public void SetAttributes(string name, bool blackS, bool gunS, bool tav, bool wardS, bool arch, bool special)
     {
@@ -48,15 +49,15 @@ public class IslandAttributes : MonoBehaviour
         hasWardsmith = wardS; hasArchetier = arch; hasSpecial = special;
     }
 
-    public void SetDiscovered()
-    {
-        isDiscovered = true;
-    }
+    //public void SetDiscovered()
+    //{
+    //    isDiscovered = true;
+    //}
 
-    public bool GetDiscovered()
-    {
-        return isDiscovered;
-    }
+    //public bool GetDiscovered()
+    //{
+    //    return isDiscovered;
+    //}
 
     public string GetName()
     {
@@ -71,6 +72,21 @@ public class IslandAttributes : MonoBehaviour
     public GameObject GetActivePanel()
     {
         return activePanel;
+    }
+
+    public void SetActions(int actionsNum)
+    {
+        actions = actionsNum;
+    }
+
+    public int GetActions()
+    {
+        return actions;
+    }
+
+    public Inventory GetShop() //This returns an inventory, because in the future we may want to have shops be depletable
+    {
+        return shopInventory;
     }
 
     //Below are all the virtual classes
@@ -94,6 +110,28 @@ public class IslandAttributes : MonoBehaviour
     public virtual string GetRumors() //In subclass, return a rumor string of your choice, as well as initiate any changes caused by that/those rumor/s
     {
         return null;
+    }
+
+    public virtual void ShopSetup()
+    {
+        shopInventory = new Inventory();
+
+        shopInventory.AddItem(new CrewWeapon(
+                                            "Sword",                        // name
+                                            "A four-foot long steel blade with a leather-bound hilt. A well made sword, but nothing to brag about.", // description
+                                            50,                             // value
+                                            CrewWeapon.WeaponMaterial.STEEL,// weapon material
+                                            100,                            // current condition
+                                            100,                            // maximum condition
+                                            2));                            // damage
+
+        shopInventory.AddItem(new Consumable(
+                                            "Health Potion",                // name
+                                            "A blood-red potion, used to magically heal an individual's wounds.", // description
+                                            5,                              // value
+                                            Consumable.Effect.HEAL,         // effect
+                                            10),                            // magnitude
+                                            4);                             // quantity
     }
 
     //What the buttons in the visitation scene do, which can be overwritten by a subclass of IslandAttributes

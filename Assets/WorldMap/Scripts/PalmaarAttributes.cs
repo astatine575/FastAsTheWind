@@ -14,7 +14,7 @@ public class PalmaarAttributes : IslandAttributes
     {
         base.Start();
         hasSpecial = true;
-        actions = 1;
+        SetActions(1);
     }
 	
 	public override bool CheckSpecial()

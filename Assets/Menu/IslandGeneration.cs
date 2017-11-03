@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class IslandGeneration : MonoBehaviour{
 
-    private Vector3[] islandLocations;
+    private List<Vector3> islandLocations;
     public int numberOfIslands;
     public float minDistanceBtwIslands;
     public float closestDistanceToSpawn;
     public float furthestDistanceToSpawn;
 
-    public Vector3[] generateIslands()
+    public List<Vector3> generateIslands()
     {
-        islandLocations = new Vector3[numberOfIslands];
+        islandLocations = new List<Vector3>(numberOfIslands);
 
         for (int i = 0; i<numberOfIslands; i++)
         {
@@ -26,10 +27,9 @@ public class IslandGeneration : MonoBehaviour{
                 closestIsland = CalculateCloseIsland(x, y, i);
             }
 
-            islandLocations[i] = new Vector3(x, y, 0);
+            islandLocations.Add(new Vector3(x, y, 0));
             
         }
-        Debug.Log(islandLocations[0].ToString() + " " + islandLocations[1].ToString() + " " + islandLocations[2].ToString());
         return islandLocations;
 
     }
@@ -58,18 +58,17 @@ public class IslandGeneration : MonoBehaviour{
         float result = 0f;
         for(int i = 0; i < numbIslandsGen; i++)
         {
-            if(islandLocations[i] != null)
+            
+            float temp = Mathf.Sqrt(Mathf.Pow(x - islandLocations[i].x, 2f) + Mathf.Pow(y - islandLocations[i].y, 2f));
+            if (i == 0)
             {
-                float temp = Mathf.Sqrt(Mathf.Pow(x - islandLocations[i].x, 2f) + Mathf.Pow(y - islandLocations[i].y, 2f));
-                if (i == 0)
-                {
-                    result = temp;
-                }
-                else
-                {
-                    result = temp < result ? temp : result;
-                }
+                result = temp;
             }
+            else
+            {
+                result = temp < result ? temp : result;
+            }
+            
         }
         return result;
     }

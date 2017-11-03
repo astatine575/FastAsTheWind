@@ -21,7 +21,7 @@ public class ValenciaAttributes : IslandAttributes
     {
         base.Start();
         hasSpecial = true;
-        actions = 5;
+        SetActions(5);
     }
 
     public override bool CheckSpecial()

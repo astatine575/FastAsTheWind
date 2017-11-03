@@ -18,11 +18,18 @@ public class ControlScript : MonoBehaviour {
 
     public GameObject combatManager; // points to Combat/Combat Manager
     private CombatState combatState;
+<<<<<<< HEAD
     private bool IsWeaponSelected;
     private FirstCannon SelectedWeapon;
     private FirstCannon[] weapons;
     private GameObject target;
     public List<string> OrderTargets;
+=======
+    private PlayerShipState playerShipState;
+    private EnemyShipState enemyShipState;
+   
+
+>>>>>>> develop
 
     // Use this for initialization
     void Start () {
@@ -191,6 +198,8 @@ public class ControlScript : MonoBehaviour {
         else
             PlayerController.ReturnToMap(-1 * PlayerStatus.GoldCount / 2, -1 * PlayerStatus.ResourcesCount / 2, PlayerStatus.ShipPos);
     }
+
+   
 
 
 }

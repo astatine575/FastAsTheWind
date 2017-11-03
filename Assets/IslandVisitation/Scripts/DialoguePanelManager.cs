@@ -33,7 +33,7 @@ public class DialoguePanelManager : MonoBehaviour
     {
         if(setNum == 0)
         {
-            actions = new bool[PlayerStatus.VisitingIsland.actions];
+            actions = new bool[PlayerStatus.VisitingIsland.GetActions()];
         }
 
         if (currentScript == null) currentScript = DialogueManager.dScript;

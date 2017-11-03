@@ -76,6 +76,10 @@ MonoBehaviour:
   hasWardsmith: 0
   hasArchetier: 0
   hasSpecial: 0
+  specialText: 
+  specInfo: 
+  specInfoResponse: 
+  specialVisible: 0
 --- !u!212 &212821279453944666
 SpriteRenderer:
   m_ObjectHideFlags: 1
