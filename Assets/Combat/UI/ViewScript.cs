@@ -39,14 +39,14 @@ public class ViewScript : MonoBehaviour {
 
     void RefreshPlayerStatDisplay() {
         textPlayerShip.text = "Allied Ship: FTL";
-        FTLHealthSlider.value = PlayerStatus.ShipHealthCurrent;
+       // FTLHealthSlider.value = PlayerStatus.ShipHealthCurrent;
         textPlayerAmmo.text = "Ammo: " + PlayerStatus.AmmoCount.ToString();
     }
 
     void RefreshEnemyStatDisplay()
     {
         textEnemyShip.text = "Enemy Ship: Boat";
-        EnemyHealthSlider.value = EnemyStatus.ShipHealthCurrent;
+       // EnemyHealthSlider.value = EnemyStatus.ShipHealthCurrent;
     }
 
     public void printToCombatLog(string line)

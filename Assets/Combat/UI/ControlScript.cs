@@ -18,18 +18,18 @@ public class ControlScript : MonoBehaviour {
 
     public GameObject combatManager; // points to Combat/Combat Manager
     private CombatState combatState;
-<<<<<<< HEAD
+//<<<<<<< HEAD
     private bool IsWeaponSelected;
     private FirstCannon SelectedWeapon;
     private FirstCannon[] weapons;
     private GameObject target;
     public List<string> OrderTargets;
-=======
+//=======
     private PlayerShipState playerShipState;
     private EnemyShipState enemyShipState;
    
 
->>>>>>> develop
+//>>>>>>> develop
 
     // Use this for initialization
     void Start () {
