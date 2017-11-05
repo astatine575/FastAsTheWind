@@ -18,7 +18,7 @@ public class Ship {
     public readonly ShipClass _shipClass; // class of the ship
 
     private readonly int _hullHealthMaxBase; // hull health of the ship without any upgrades
-    public int _hullHealth; // current hull health of the ship
+    public static int _hullHealth; // current hull health of the ship
 
     private readonly int _crewHealthMaxBase; // crew health of the ship without any upgrades
     public int _crewHealth; // current crew health of the ship
