@@ -1,5 +1,5 @@
 # FastAsTheWind
-To run the project, open the root of the repository in Unity 3d.
+To run the project, open the root of the repository in Unity 3d.Then download the assets package and open the zip into the assets folder of the project: https://www.dropbox.com/s/nmkxpdh3qvdpez2/Datapack.zip?dl=0
 Next make sure that the build settings are setup properly. Go to File-Build Settings and select that option.
 Be sure that the build heirarchy is as follows:
 Menu/Menu Temp     				   0
