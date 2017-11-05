@@ -7,8 +7,7 @@ public class RockHazard : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		collided = false;
-		ship = GetComponent<Ship> ();
+        collided = false;
 	}
 
 	public void OnTriggerEnter2D (Collider2D collision) {
@@ -22,7 +21,8 @@ public class RockHazard : MonoBehaviour {
 	// Update is called once per frame
 	public void FixedUpdate () {
 		while (collided) {
-			ship._hullhealth = ship._hullhealth - 5;
+			int tmp = PlayerStatus.ShipHealthCurrent - 5;
+            PlayerStatus.ShipHealthCurrent = tmp < 0 ? 0 : tmp;
 		}
 		// if the player collided with this object raduis, remove a certain amount of
 		// health each update until they exit the radius

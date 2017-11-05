@@ -6,11 +6,10 @@ public class WhirlpoolRadius : MonoBehaviour {
 	public float Whirlpoolstrength;
 
 	private bool collided;
-	private Rigidbody2D player;
+	public Rigidbody2D player;
 
 	// Use this for initialization
 	void Start () {
-		player = GetComponent<Rigidbody2D> ();
 		collided = false;
 	}
 
