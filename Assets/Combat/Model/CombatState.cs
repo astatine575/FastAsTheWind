@@ -64,9 +64,12 @@ public class CombatState : MonoBehaviour {
 
         Health targetHealth = input.targetObject.GetComponent<Health>();
 
-        if (input.targetObject.tag == "Enemy")
-
+        if (input.targetObject.tag == "Enemy") {
             UI.printToCombatLog("The " + "Player" + " dealt " + damage.ToString() + " damage to the " + "Enemy" + "!");
+            PlayerStatus.AmmoCount -= 1;
+        }
+
+            
         else
 
             UI.printToCombatLog("The " + "Enemy" + " dealt " + damage.ToString() + " damage to the " + "Player" + "!");
@@ -94,9 +97,12 @@ public class CombatState : MonoBehaviour {
     }
 
     public void TextMiss(Turns input) {
-        if (input.targetObject.tag == "Enemy")
-
+        if (input.targetObject.tag == "Enemy") {
             UI.printToCombatLog("The " + "Player" + " missed the " + "Enemy" + "!");
+            PlayerStatus.AmmoCount -= 1;
+        }
+
+           
         else
 
             UI.printToCombatLog("The " + "Enemy" + " missed the "  + "Player" + "!");
