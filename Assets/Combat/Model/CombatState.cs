@@ -58,18 +58,18 @@ public class CombatState : MonoBehaviour {
         GameObject target = input.targetObject;
         FirstCannon weapon = input.weaponUsed;
         weapon.DoDamage(input);
-        TextOut(input);
     }
 
-    public void TextOut (Turns input){
+    public void TextOut (Turns input,int damage){
+
         Health targetHealth = input.targetObject.GetComponent<Health>();
 
-        if (input.targetObject.tag == "Player")
+        if (input.targetObject.tag == "Enemy")
 
-            UI.printToCombatLog("The " + "Player" + " dealt " + input.weaponUsed.BaseAttack.ToString() + " damage to the " + "Enemy" + "!");
+            UI.printToCombatLog("The " + "Player" + " dealt " + damage.ToString() + " damage to the " + "Enemy" + "!");
         else
 
-            UI.printToCombatLog("The " + "Enemy" + " dealt " + input.weaponUsed.BaseAttack.ToString() + " damage to the " + "Enemy" + "!");
+            UI.printToCombatLog("The " + "Enemy" + " dealt " + damage.ToString() + " damage to the " + "Player" + "!");
 
         if (targetHealth.ShipHull <= 0){
 
@@ -91,6 +91,16 @@ public class CombatState : MonoBehaviour {
                 combatOver = true;
             }
         }
+    }
+
+    public void TextMiss(Turns input) {
+        if (input.targetObject.tag == "Enemy")
+
+            UI.printToCombatLog("The " + "Player" + " missed the " + "Enemy" + "!");
+        else
+
+            UI.printToCombatLog("The " + "Enemy" + " missed the "  + "Player" + "!");
+
     }
 
 }

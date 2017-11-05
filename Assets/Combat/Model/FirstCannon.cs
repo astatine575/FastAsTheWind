@@ -18,8 +18,9 @@ public abstract class FirstCannon : MonoBehaviour
 
     public int NumOfTargets {get; set;}
     public bool AutoTarget {get; set;}
-    private CombatState CSM;
+    public CombatState CSM;
     private GameObject Self;
+
 
     public enum States  //The states the weapon can be in.
      {

@@ -114,8 +114,10 @@ public class ControlScript : MonoBehaviour {
         {
             target = combatState.enemy[0];
             List<string> copy = new List<string>(OrderTargets);
+            if (copy.Capacity > 0) { copy.RemoveAt(0); }
             copy.Add("HULL");
             SelectedWeapon.Target(target,copy);
+            OrderTargets.Clear();
             IsWeaponSelected = false;
         }
 
@@ -143,6 +145,7 @@ public class ControlScript : MonoBehaviour {
         {
             target = combatState.enemy[0];
             List<string> copy = new List<string>(OrderTargets);
+            if (copy.Capacity > 0) { copy.RemoveAt(0); }
             copy.Add("SAIL");
             SelectedWeapon.Target(target,copy);
             OrderTargets.Clear();
@@ -170,6 +173,7 @@ public class ControlScript : MonoBehaviour {
         {
             target = combatState.enemy[0];
             List<string> copy = new List<string>(OrderTargets);
+            if (copy.Capacity > 0) { copy.RemoveAt(0); }
             copy.Add("CREW");
             SelectedWeapon.Target(target,copy);
             OrderTargets.Clear();
