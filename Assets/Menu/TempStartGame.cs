@@ -25,7 +25,7 @@ public class TempStartGame : MonoBehaviour {
                                           "FTL",                            // name
                                           "Your trusty old sloop. She may not be much, but she served you well during your time as a merchant.", // description
                                           1000,                             // value
-                                          Ship.ShipClass.SLOOP,             // ship class
+                                          Ship.ShipClass.FRIGATE,             // ship class
                                           100,                              // base hull health
                                           10,                               // base/necessary crew health/count
                                           50                                // base sail health
@@ -41,14 +41,22 @@ public class TempStartGame : MonoBehaviour {
         //                                    100,                            // maximum condition
         //                                    2));                            // damage
         //for (int i = 0; i < 4; i++)
-        //    PlayerStatus.Inventory.AddItem(new ShipWeapon(
-        //                                    "Basic Cannon",   // name
-        //                                    "The old and reliable 20mm naval gun, a common weapon used by merchant, pirate, and naval vessels alike.", // description
-        //                                    50,                             // value
-        //                                    ShipWeapon.WeaponType.CANNON,   // weapon type
-        //                                    Ammunition.AmmoType.CANNONBALL, // ammo type
-        //                                    2,                              // cooldown
-        //                                    10));                           // damage
+        for (int i = 0; i < 6; i++) PlayerStatus.Inventory.AddItem(new ShipWeapon(
+                                        "Basic Cannon",   // name
+                                        "The old and reliable 20mm naval gun, a common weapon used by merchant, pirate, and naval vessels alike.", // description
+                                        50,                             // value
+                                        ShipWeapon.WeaponType.CANNON,   // weapon type
+                                        Ammunition.AmmoType.CANNONBALL, // ammo type
+                                        2,                              // cooldown
+                                        10));                           // damage
+        for (int i = 0; i < 2; i++) PlayerStatus.Inventory.AddItem(new ShipWeapon(
+                                        "Fireball Spell",   // name
+                                        "XR, sorcery", // description
+                                        50,                             // value
+                                        ShipWeapon.WeaponType.SPELL,   // weapon type
+                                        Ammunition.AmmoType.MANASHARD, // ammo type
+                                        1,                              // cooldown
+                                        5));                           // damage
         //PlayerStatus.Inventory.AddItem(new Consumable(
         //                                    "Health Potion",                // name
         //                                    "A blood-red potion, used to magically heal an individual's wounds.", // description

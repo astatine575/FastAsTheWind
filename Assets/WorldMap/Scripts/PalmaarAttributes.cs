@@ -7,7 +7,7 @@ public class PalmaarAttributes : IslandAttributes
     public string tavernRumor;
     private bool foundEllia;
 
-    public string elliaFifty;
+    public TextAsset elliaFifty;
 
 	// Use this for initialization
 	public override void Start ()
@@ -50,7 +50,7 @@ public class PalmaarAttributes : IslandAttributes
         {
             caller.mainPanel.gameObject.SetActive(false);
 
-            DialogueManager.SetUpDialogue("Assets/DialogueTextFiles/" + elliaFifty);
+            DialogueManager.SetUpDialogue(elliaFifty);
 
             DialoguePanelManager dpm = caller.dialoguePanel.GetComponent<DialoguePanelManager>();
 
