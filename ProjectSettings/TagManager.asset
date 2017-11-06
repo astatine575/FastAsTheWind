@@ -5,18 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - island
-  - Enemy
-  - DialogueButton
   - ToDestroy
-  - Market
-  - Shipswright
-  - Tavern
-  - Blacksmith
-  - Gunsmith
-  - Archetier
-  - Wardsmith
-  - Special
-  - SetSail
   layers:
   - Default
   - TransparentFX
