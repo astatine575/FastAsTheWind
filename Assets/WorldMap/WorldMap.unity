@@ -2586,7 +2586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthDisplay: {fileID: 2011677912}
   ammunitionsDisplay: {fileID: 757955805}
-  adamButton: {fileID: 0}
+  adamButton: {fileID: 864004801}
   armamentsPanel: {fileID: 1805707064}
 --- !u!1001 &864004799
 Prefab:
@@ -2793,6 +2793,11 @@ Prefab:
 --- !u!224 &864004800 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224719831043418302, guid: 4df134570973a5e41a7c6b29e007fc07,
+    type: 2}
+  m_PrefabInternal: {fileID: 864004799}
+--- !u!1 &864004801 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1423598723001126, guid: 4df134570973a5e41a7c6b29e007fc07,
     type: 2}
   m_PrefabInternal: {fileID: 864004799}
 --- !u!114 &864004802 stripped
