@@ -24,7 +24,8 @@ public class ItemDetailsManager : MonoBehaviour
         detailsText.text = gameItem.GetAttributes();
         if (((gameItem.GetItemType() == "Personal Weapon") || (gameItem.GetItemType() == "Ship Weapon")) && !isEquipped)
         {
-            equipButton.gameObject.SetActive(true);
+            if (gameItem.GetItemType() != "Personal Weapon") equipButton.gameObject.SetActive(true);
+            else equipButton.gameObject.SetActive(false);
             dropButton.gameObject.SetActive(true);
         }
         else
