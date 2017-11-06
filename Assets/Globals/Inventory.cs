@@ -18,7 +18,7 @@ public class Inventory
             if (item.GetStackable())
             {
                 inventoryList[index].quantity += quantity;
-                size += quantity;
+                //size += quantity;
                 //Debug.Log("Added " + quantity.ToString() + " " + item.GetName() + " to player inventory");
                 return;
             }
@@ -26,7 +26,8 @@ public class Inventory
             {
                 item.invLoc = index;
                 inventoryList[index] = item;
-                size++;
+                inventoryList[index].quantity = 1;
+                //size++;
                 //Debug.Log("Added a " + item.GetName() + " to player inventory");
                 return;
             }
@@ -35,7 +36,7 @@ public class Inventory
                 inventoryList.Insert(inventoryList.Count, item);
                 item.invLoc = inventoryList.Count - 1;
                 //Debug.Log("Added a " + item.GetName() + " to player inventory");
-                size++;
+                //size++;
             }
         }
         else
@@ -61,8 +62,8 @@ public class Inventory
         if (item.quantity <= 0)
             return false;
 
-        item.quantity--;
-        size--;
+        item.quantity = 0;
+        //size--;  This shouldn't be here, as the space in the array will still be occupied, so decreasing size without moving everything down will break the code
         return true;
     }
 
@@ -93,6 +94,11 @@ public abstract class GameItem
     public void Drop()
     {
         PlayerStatus.Inventory.RemoveItem(this);
+    }
+
+    public GameItem CreateInstance()
+    {
+        return (GameItem)this.MemberwiseClone();
     }
 
     public abstract string GetName();

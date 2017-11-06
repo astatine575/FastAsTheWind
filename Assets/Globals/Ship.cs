@@ -82,6 +82,14 @@ public class Ship {
                 {
                     weaponSlots[i] = new WeaponSlot();
                     weaponSlots[i].addType(ShipWeapon.WeaponType.CANNON);
+                    //weaponSlots[i].equippedWeapon = (ShipWeapon)new ShipWeapon(
+                    //                        "Basic Cannon",   // name
+                    //                        "The old and reliable 20mm naval gun, a common weapon used by merchant, pirate, and naval vessels alike.", // description
+                    //                        50,                             // value
+                    //                        ShipWeapon.WeaponType.CANNON,   // weapon type
+                    //                        Ammunition.AmmoType.CANNONBALL, // ammo type
+                    //                        2,                              // cooldown
+                    //                        10).CreateInstance();                           // damage
                 }
                 break;
             case ShipClass.FRIGATE: // Frigates have 8 slots for cannons, slots 6 and 7 can also be used for spells
@@ -173,6 +181,14 @@ public class WeaponSlot
     {
         acceptedTypes = new List<ShipWeapon.WeaponType>();
         numTypes = 0;
+    }
+
+    //By Jon G.; puts the current weapon in this slot back in player inventory, then sets a new weapon to the slot
+    public void Replace(ShipWeapon newWeapon) 
+    {
+        if(equippedWeapon != null) PlayerStatus.Inventory.AddItem(equippedWeapon.CreateInstance());
+        equippedWeapon = (ShipWeapon)newWeapon.CreateInstance();
+        newWeapon.Drop();
     }
 
     public ShipWeapon.WeaponType[] validTypes()
