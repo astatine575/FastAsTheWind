@@ -167,6 +167,7 @@ public class PlayerController : MonoBehaviour {
                 EnemyStatus.GoldCount = 50;
                 EnemyStatus.ResourcesCount = 20;
                 SceneManager.LoadScene(SceneIndexes.Combat());
+                
             }
             else chanceHolder += encounterChance;
 
