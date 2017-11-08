@@ -42,25 +42,25 @@ public class Ship {
         _crewHealthMaxBase = crewHealthMaxBase;
         _sailHealthMaxBase = sailHealthMaxBase;
 
-        _hullHealth = HullStrengthMax();
-        _crewHealth = CrewStrengthMax();
-        _sailHealth = SailStrengthMax();
+        _hullHealth = HullHealthMax();
+        _crewHealth = CrewHealthMax();
+        _sailHealth = SailHealthMax();
 
 
         InitializeWeaponSlots();
     }
 
-    public int HullStrengthMax() // returns maximum hull strength after all upgrades
+    public int HullHealthMax() // returns maximum hull strength after all upgrades
     {
         return _hullHealthMaxBase;
     }
 
-    public int CrewStrengthMax() // returns maximum crew strength after all upgrades
+    public int CrewHealthMax() // returns maximum crew strength after all upgrades
     {
         return _crewHealthMaxBase;
     }
 
-    public int SailStrengthMax() // returns maximum sail strength after all upgrades
+    public int SailHealthMax() // returns maximum sail strength after all upgrades
     {
         return _sailHealthMaxBase;
     }

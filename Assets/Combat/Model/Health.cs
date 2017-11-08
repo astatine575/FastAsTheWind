@@ -15,9 +15,9 @@ public class Health : MonoBehaviour {
 
         if (Self.tag == "Player")   //Check if it is attached to the player or enemy.
         {
-            ShipHull = PlayerStatus.ShipHealthCurrent;
-            ShipSail = 100;
-            ShipCrew = 20;
+            ShipHull = PlayerStatus.Ship._hullHealth;
+            ShipSail = PlayerStatus.Ship._sailHealth;
+            ShipCrew = PlayerStatus.Ship._crewHealth;
         }
 
         else {
@@ -33,7 +33,9 @@ public class Health : MonoBehaviour {
 
         if (Self.tag == "Player")
         {
-            PlayerStatus.ShipHealthCurrent = ShipHull;
+            PlayerStatus.Ship._hullHealth = ShipHull;
+            PlayerStatus.Ship._sailHealth = ShipSail;
+            PlayerStatus.Ship._crewHealth = ShipCrew;
         }
 
         else
