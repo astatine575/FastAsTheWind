@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject statsPanel;
     public GameObject savePanel;
+    public GameObject encounterAlert;
 
     public int visitationSceneIndex;
     public int battleSceneIndex;
@@ -32,13 +33,11 @@ public class PlayerController : MonoBehaviour {
     private int depletionCounter; //lower = faster
     private float cumulatingChance;
 
-    private bool moveLock;
+    private bool moveLock = false;
     private bool isVisiting;
 
     private float zRotation;
 
-    private int encounterMultFriendly = 0; //Only set to 0 or 1 *DEPRECATED*
-    private int encounterMultHostile = 0; //^
     private float encounterMult = 0; //Negative values make for more friendly areas; positive for more hostile
 
     public static void ReturnToMap(int goldReward, int resourcesReward, Vector3 returnPos) //if returnPos is the same location the ship was in before, pass in PlayerStatus.ShipPos
@@ -90,7 +89,7 @@ public class PlayerController : MonoBehaviour {
         depletionCounter = 0;
         moveLock = false;
 
-        cumulatingChance = .0001f;
+        cumulatingChance = -.05f;
 
         islandID.text = "";
         deathAlert.text = "";
@@ -153,6 +152,7 @@ public class PlayerController : MonoBehaviour {
             player.velocity = speed * speedMult;
             //player.AddForce(speed * speedMult);
         }
+        else player.velocity = new Vector2(0, 0);
 
         if(((horVel != 0) || (verVel != 0)) && !moveLock) //As long as a key is being pressed—!moveLock is included so it doesn't break in menus
         {
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour {
         if ((speed.x != 0) || (speed.y != 0)) //As long as the ship is in motion
         {
             depletionCounter++; //Deplete resources
-            if ((depletionCounter == depletionRate) && !moveLock)
+            if ((depletionCounter >= depletionRate) && !moveLock)
             {
                 PlayerStatus.ResourcesCount--;
                 depletionCounter = 0;
@@ -187,14 +187,19 @@ public class PlayerController : MonoBehaviour {
 
             if (rand > 1 - cumulatingChance) //Check for random encounter
             {
-                cumulatingChance = .0001f;
-                EnemyStatus.ShipHealthMax = 50;
-                EnemyStatus.ShipHealthCurrent = 50;
-                EnemyStatus.GoldCount = 50;
-                EnemyStatus.ResourcesCount = 20;
-                SceneManager.LoadScene(SceneIndexes.Combat());
+                cumulatingChance = -.025f;
+                //EnemyStatus.ShipHealthMax = 50;
+                //EnemyStatus.ShipHealthCurrent = 50;
+                //EnemyStatus.GoldCount = 50;
+                //EnemyStatus.ResourcesCount = 20;
+                //SceneManager.LoadScene(SceneIndexes.Combat());
+                //Commented out code is executed over in the method called below
+
+                moveLock = true;
+                encounterAlert.GetComponent<AlertManager>().dangerMult = encounterMult;
+                encounterAlert.SetActive(true);
             }
-            else if (cumulatingChance <= .05)
+            else if (cumulatingChance <= (.025 * (1 + encounterMult))) //The extra stuff in this if statement is so that cumulating chance can't be increased that much inside safer areas
             {
                 cumulatingChance += encounterChanceIncrease;
             }
