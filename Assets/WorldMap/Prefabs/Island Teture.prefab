@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4021204990131446}
   - component: {fileID: 212162929969703946}
   - component: {fileID: 60023432638145118}
+  - component: {fileID: 114567114052893620}
   m_Layer: 0
   m_Name: Island Teture
   m_TagString: Untagged
@@ -161,6 +162,19 @@ PolygonCollider2D:
       - {x: -3.2528589, y: -1.3318515}
       - {x: -3.2772164, y: -2.050246}
       - {x: -3.2248673, y: -2.2542682}
+--- !u!114 &114567114052893620
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820361951648542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8482edf3f0f123845acb6a6bfaeec486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  island: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!212 &212162929969703946
 SpriteRenderer:
   m_ObjectHideFlags: 1
