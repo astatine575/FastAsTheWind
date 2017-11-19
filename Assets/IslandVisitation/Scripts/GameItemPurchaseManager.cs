@@ -81,7 +81,8 @@ public class GameItemPurchaseManager : MonoBehaviour
 
         for(int i = 0; i < quantityBuying; i++)
         {
-            PlayerStatus.Inventory.AddItem(purchasedItem);
+            GameItem newItem = purchasedItem.CreateInstance();
+            PlayerStatus.Inventory.AddItem(newItem);
         }
 
         thisPanel.SetActive(false);
