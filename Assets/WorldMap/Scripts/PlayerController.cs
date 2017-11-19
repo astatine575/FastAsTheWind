@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject statsPanel;
     public GameObject savePanel;
+    public GameObject GameOverPanel;
+    public Text gameOverText;
     public GameObject encounterAlert;
 
     public int visitationSceneIndex;
@@ -216,7 +218,18 @@ public class PlayerController : MonoBehaviour {
         {
             moveLock = true;
             player.velocity = new Vector2(0, 0);
-            deathAlert.text = "Your crew has run out of resources, and has starved to death. May the Gods have mercy on their souls.";
+            gameOverText.text = "Your crew has run out of resources, and has starved to death. May the Gods have mercy on their souls.";
+
+            GameOverPanel.SetActive(true);
+        }
+
+        if(PlayerStatus.ShipHealthCurrent <= 0)
+        {
+            moveLock = true;
+            player.velocity = new Vector2(0, 0);
+            gameOverText.text = "Your ship was destroyed in combat, and your crew sinks to the bottom of the ocean. May the Gods have mercy on their souls.";
+
+            GameOverPanel.SetActive(true);
         }
     }
 
