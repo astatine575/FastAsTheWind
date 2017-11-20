@@ -75,6 +75,16 @@ public class TutorialController : MonoBehaviour
         }
     }
 
+    public string GetTutorStatus()
+    {
+        return tutorStatus;
+    }
+
+    public void SetVisiting(bool status)
+    {
+        isVisiting = status;
+    }
+
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
@@ -92,7 +102,7 @@ public class TutorialController : MonoBehaviour
 
         PlayerStatus.PlayerControllerRef = (PlayerController)gameObject.GetComponent(typeof(PlayerController));
 
-
+        AdvanceTutorial();
     }
 
     private void Update()
@@ -140,13 +150,7 @@ public class TutorialController : MonoBehaviour
 
         if (!moveLock && (tutorStatus == "move" || tutorStatus == "visit"))
         {
-            if (tutorStatus == "move")
-            {
-                tutorText.text = "\"See? You got the hang of this. Now, just sail around a bit more, " +
-                    "so you get the feel of it.\"";
-                requiredMovementCounter++;
-                if (requiredMovementCounter >= requiredMovement) AdvanceTutorial();
-            }
+            
             speed = new Vector2(horVel, verVel);
             player.velocity = speed * speedMult;
             //player.AddForce(speed * speedMult);
@@ -169,15 +173,23 @@ public class TutorialController : MonoBehaviour
             }
 
             lastRotation = sprite.transform.eulerAngles;
+
+            if (tutorStatus == "move")
+            {
+                tutorText.text = "\"See? You got the hang of this. Now, just sail around a bit more, " +
+                    "so you get the feel of it.\"";
+                requiredMovementCounter++;
+                if (requiredMovementCounter >= requiredMovement) AdvanceTutorial();
+            }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (tutorStatus == "visit") tutorText.text = "\"When you get close enough to an island, you can dock at that island by pressing enter." +
-                " Why don't you try that now?\"";
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (tutorStatus == "visit") tutorText.text = "\"When you get close enough to an island, you can dock at that island by pressing enter." +
+    //            " Why don't you try that now?\"";
 
-    }
+    //}
 
     private void StartMove()
     {
@@ -211,7 +223,7 @@ public class TutorialController : MonoBehaviour
 
     private void ConcludeTutorial()
     {
-
+        SceneManager.LoadScene(SceneIndexes.WorldMap());
     }
 
     private IEnumerator GoldAndResources()
@@ -225,13 +237,13 @@ public class TutorialController : MonoBehaviour
         yield return new WaitForSeconds(.75f);
         yield return new WaitUntil(() => Input.GetButton("Submit") == true);
 
-        tutorText.text = "\"Gold is the universal currency of the world, and can get you pretty much anything you want. Keep in" +
+        tutorText.text = "\"Gold is the universal currency of the world, and can get you pretty much anything you want. Keep in " +
             "mind: all the gold in the world won't do you a lick of good out in the middle of the ocean.\" (press ENTER to continue)";
 
         yield return new WaitForSeconds(.75f);
         yield return new WaitUntil(() => Input.GetButton("Submit") == true);
 
-        tutorText.text = "\"Your resources—that is, your food, water, and medicine—are what you'll need to keep your men alive" +
+        tutorText.text = "\"Your resources—that is, your food, water, and medicine—are what you'll need to keep your men alive " +
             "during your journeys far from land. You'll be able to live without gold, but without resources you may as well" +
             " toss yourself in the sea and let the sharks have you.\" (press ENTER to continue)";
 
@@ -250,7 +262,7 @@ public class TutorialController : MonoBehaviour
         yield return new WaitForSeconds(.75f);
         yield return new WaitUntil(() => Input.GetButton("Submit") == true);
 
-        tutorText.text = "(press ENTER to skip your father's long series of financially crippling misfortunes, which threw your" +
+        tutorText.text = "(press ENTER to skip your father's long series of financially crippling misfortunes, which threw your " +
             "family into poverty and funnelled you into a life of crime)";
 
         yield return new WaitForSeconds(.75f);

@@ -16,7 +16,7 @@ public class TutorialReturn : MonoBehaviour
 
     private void OnClick()
     {
-        thisPanel.GetComponent<StatMenuTutorial>().ReturnToMap();
-        thisPanel.GetComponent<SaveMenuTutorial>().ReturnToMap();
+        if (thisPanel.GetComponent<StatMenuTutorial>() != null) thisPanel.GetComponent<StatMenuTutorial>().ReturnToMap();
+        else thisPanel.GetComponent<SaveMenuTutorial>().ReturnToMap();
     }
 }

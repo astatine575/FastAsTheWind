@@ -20,7 +20,7 @@ public class StatMenuTutorial : MonoBehaviour
 	private IEnumerator MenuTutorial()
     {
         tutorText.text = "\"There's more to captaining a ship than knowing port from starboard. " +
-            "When you're in charge of a ship, you're also in charge of everyone and everything on her.\" (press Enter to" +
+            "When you're in charge of a ship, you're also in charge of everyone and everything on her.\" (press Enter to " +
             "continue)";
 
         yield return new WaitForSeconds(.75f);
