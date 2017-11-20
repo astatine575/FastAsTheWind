@@ -19,6 +19,22 @@ public class SaveAndLoad : MonoBehaviour
         Save();
     }
 
+    public void OnClickMainMenu()
+    {
+        SceneManager.LoadScene(SceneIndexes.MainMenu());
+    }
+
+    public void OnClickSaveExit()
+    {
+        Save();
+        Application.Quit();
+    }
+
+    public void OnClickExit()
+    {
+        Application.Quit();
+    }
+
     public void Load()
     {
         if (File.Exists(Application.dataPath + "/saves/SaveData.dat"))
@@ -97,10 +113,16 @@ public class SaveAndLoad : MonoBehaviour
 
         //island globals
         data.islandLocations = new List<SerVector3>();
+        data.islandOffsets = new List<SerVector3>();
 
         foreach (Vector3 v3 in IslandStats.IslandLocations)
         {
             data.islandLocations.Add(Vector3ToSerVector3(v3));
+        }
+
+        foreach(Vector3 v3 in IslandStats.IslandOffsets)
+        {
+            data.islandOffsets.Add(Vector3ToSerVector3(v3));
         }
 
         data.visitedIslands = PlayerStatus.VisitedIslands;
@@ -144,6 +166,12 @@ public class SaveAndLoad : MonoBehaviour
         foreach(SerVector3 sv3 in data.islandLocations)
         {
             IslandStats.IslandLocations.Add(SerVector3ToVector3(sv3));
+        }
+
+        IslandStats.IslandOffsets = new List<Vector3>();
+        foreach(SerVector3 sv3 in data.islandOffsets)
+        {
+            IslandStats.IslandOffsets.Add(SerVector3ToVector3(sv3));
         }
 
         PlayerStatus.VisitedIslands = data.visitedIslands;
@@ -195,6 +223,7 @@ public class Savedata
 
     //Island Stat globals
     public List<SerVector3> islandLocations;
+    public List<SerVector3> islandOffsets;
     public ArrayList visitedIslands;
 
     //Enemy Stat Globals

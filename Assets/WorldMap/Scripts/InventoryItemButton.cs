@@ -35,6 +35,7 @@ public class InventoryItemButton : MonoBehaviour
 
         ItemDetailsManager detailsScript = detailsPanel.gameObject.GetComponent<ItemDetailsManager>();
         detailsScript.gameItem = refItem;
+        detailsScript.returnPanel = thisPanel;
         detailsPanel.SetActive(true);
         //Once inventory is implemented, find a way to pass the button's stored object to the details panel
     }

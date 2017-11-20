@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class ViewScript : MonoBehaviour {
 
     public Text textPlayerShip;
-    public Text textPlayerHealth;
+    public Slider FTLHealthSlider;
+    public Slider EnemyHealthSlider;
+    public Color goodHealthColor = Color.green;
+    public Color averageHealthColor = Color.yellow;
+    public Color badHealthColor = Color.red;
     public Text textPlayerAmmo;
     public Text textEnemyShip;
-    public Text textEnemyHealth;
     public Text textCombatLog; // points to Combat/Canvas/TextCombatLog
     private string[] combatLogBuffer; // a buffer to track what's displayed in the combat log.
     private int combatLogSize; // how many lines can fit into the combat log
@@ -36,14 +39,14 @@ public class ViewScript : MonoBehaviour {
 
     void RefreshPlayerStatDisplay() {
         textPlayerShip.text = "Allied Ship: FTL";
-        textPlayerHealth.text = "HP: " + PlayerStatus.ShipHealthCurrent.ToString() + "/" + PlayerStatus.ShipHealthMax.ToString();
+        FTLHealthSlider.value = PlayerStatus.ShipHealthCurrent;
         textPlayerAmmo.text = "Ammo: " + PlayerStatus.AmmoCount.ToString();
     }
 
     void RefreshEnemyStatDisplay()
     {
         textEnemyShip.text = "Enemy Ship: Boat";
-        textEnemyHealth.text = "HP: " + EnemyStatus.ShipHealthCurrent.ToString() + "/" + EnemyStatus.ShipHealthMax.ToString();
+        EnemyHealthSlider.value = EnemyStatus.ShipHealthCurrent;
     }
 
     public void printToCombatLog(string line)

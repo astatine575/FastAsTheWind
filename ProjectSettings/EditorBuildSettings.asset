@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/IslandVisitation/IslandVisitation.unity
     guid: 9310cfe65aeec834c87f6c37266d0d61
+  - enabled: 1
+    path: Assets/Tutorial/Tutorial.unity
+    guid: 021c7cd1d5c257c489320f4ad714da11
   - enabled: 0
     path: 
-    guid: 03d2910d06a03274080dd3a3fc8080dc
+    guid: 00000000000000000000000000000000
