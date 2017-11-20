@@ -9,16 +9,17 @@ public class TutorialController : MonoBehaviour
 {
 
     public float speedMult;
+    public float requiredMovement;
 
     public Text islandID;
     public Text resourcesCount;
     public Text goldCount;
-    public Text deathAlert;
     public Text enterPrompt;
+    public Text tutorText;
 
     public GameObject statsPanel;
     public GameObject savePanel;
-    public GameObject encounterAlert;
+    public GameObject tutorPanel;
 
     public GameObject sprite;
 
@@ -26,55 +27,52 @@ public class TutorialController : MonoBehaviour
 
     private Vector2 speed;
     private Vector3 lastRotation;
-    private int depletionCounter; //lower = faster
+    private int requiredMovementCounter = 0;
     private float cumulatingChance;
 
     private bool moveLock = false;
-    private bool isVisiting;
+    private bool isVisiting = false;
+    private string tutorStatus = "start";
+    //Possible states: "start", "move", "visit", "stats", "menu", "conclusion"
 
     private float zRotation;
 
     private float encounterMult = 0; //Negative values make for more friendly areas; positive for more hostile
 
-    public static void ReturnToMap(int goldReward, int resourcesReward, Vector3 returnPos) //if returnPos is the same location the ship was in before, pass in PlayerStatus.ShipPos
-    {
-        PlayerStatus.GoldCount += goldReward;
-        PlayerStatus.ResourcesCount += resourcesReward;
-        PlayerStatus.ShipPos = returnPos;
-
-        SceneManager.LoadScene(SceneIndexes.WorldMap());
-    }
-
-    public void SetVisiting(bool status) //Called whenever the player nears an island, to check if player can enter Island Visitation
-    {
-        isVisiting = status;
-    }
 
     public void SetMoveLock(bool status) //Called whenever any sort of menu is opened or the player is no longer capable of moving
     {
         moveLock = status;
     }
 
-    //Called when the ship enters or exits a friendly area
-    //Give value of true upon enter; false upon exit
-    //public void NearFriendly(bool val) 
-    //{
-    //    if (val) encounterMultFriendly = 1; //Convert boolean to integer
-    //    if (!val) encounterMultFriendly = 0;
-    //    //Therefore, resulting variable is 1 while in a friendly zone, and 0 while not
-    //}
-
-    ////Essentially the same as NearFriendly
-    //public void NearHostile(bool val) //Called when the ship entes or exits a more hostile area
-    //{
-    //    if (val) encounterMultHostile = 1; //Convert boolean to integer
-    //    if (!val) encounterMultHostile = 0;
-    //}
-
-    public void ChangeHostility(float val) //Called when the ship enters or exits the border of more hostile or more friendly areas
+    public void AdvanceTutorial()
     {
-        encounterMult += val;
-
+        switch(tutorStatus)
+        {
+            case "start":
+                tutorStatus = "move";
+                StartMove();
+                break;
+            case "move":
+                tutorStatus = "visit";
+                StartVisit();
+                break;
+            case "visit":
+                tutorStatus = "stats";
+                StartStats();
+                break;
+            case "stats":
+                tutorStatus = "menu";
+                StartMenu();
+                break;
+            case "menu":
+                tutorStatus = "conclusion";
+                StartConclusion();
+                break;
+            case "conclusion":
+                ConcludeTutorial();
+                break;
+        }
     }
 
     void Start()
@@ -82,17 +80,15 @@ public class TutorialController : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
 
         transform.position = PlayerStatus.ShipPos;
-        depletionCounter = 0;
         moveLock = false;
 
         cumulatingChance = -.05f;
 
         islandID.text = "";
-        deathAlert.text = "";
         enterPrompt.text = "";
 
-        SetResources();
-        SetGold();
+        goldCount.text = "Gold: 3862";
+        resourcesCount.text = "Resources: 784";
 
         PlayerStatus.PlayerControllerRef = (PlayerController)gameObject.GetComponent(typeof(PlayerController));
 
@@ -101,37 +97,37 @@ public class TutorialController : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetButton("Submit")) && isVisiting)
+        if ((Input.GetButton("Submit")) && isVisiting && tutorStatus == "visit")
         {
-            SceneManager.LoadScene(SceneIndexes.IslandVisitation());
+            AdvanceTutorial();
         }
 
-        if ((Input.GetButton("Menu")) && !moveLock && (player.velocity.x == 0) && (player.velocity.y == 0))
+        if ((Input.GetButton("Menu")) && !moveLock && (player.velocity.x == 0) && (player.velocity.y == 0) && tutorStatus == "stats")
         //If moveLock is true, the player is either dead or in a menu. In either case, tab shouldn't open the stats panel
         {
             moveLock = true;
 
-            goldCount.text = "";
-            resourcesCount.text = "";
+            goldCount.text = "Gold: 3862";
+            resourcesCount.text = "Resources: 784";
 
             statsPanel.SetActive(true);
         }
 
-        if (Input.GetButton("Cancel") && !moveLock && (player.velocity.x == 0) && (player.velocity.y == 0))
+        if (Input.GetButton("Cancel") && !moveLock && (player.velocity.x == 0) && (player.velocity.y == 0) && tutorStatus == "menu")
 
         {
             moveLock = true;
 
-            goldCount.text = "";
-            resourcesCount.text = "";
+            goldCount.text = "Gold: 3862";
+            resourcesCount.text = "Resources: 784";
 
             savePanel.SetActive(true);
         }
 
         if (!moveLock) //With the if statement, the gold count and resources count will be reset upon leaving the stats menu
         {
-            SetGold();
-            SetResources();
+            goldCount.text = "Gold: 3862";
+            resourcesCount.text = "Resources: 784";
         }
     }
 
@@ -142,15 +138,22 @@ public class TutorialController : MonoBehaviour
 
         //sprite.transform.eulerAngles = lastRotation;
 
-        if (!moveLock)
+        if (!moveLock && (tutorStatus == "move" || tutorStatus == "visit"))
         {
+            if (tutorStatus == "move")
+            {
+                tutorText.text = "\"See? You got the hang of this. Now, just sail around a bit more, " +
+                    "so you get the feel of it.\"";
+                requiredMovementCounter++;
+                if (requiredMovementCounter >= requiredMovement) AdvanceTutorial();
+            }
             speed = new Vector2(horVel, verVel);
             player.velocity = speed * speedMult;
             //player.AddForce(speed * speedMult);
         }
         else player.velocity = new Vector2(0, 0);
 
-        if (((horVel != 0) || (verVel != 0)) && !moveLock) //As long as a key is being pressed—!moveLock is included so it doesn't break in menus
+        if (((horVel != 0) || (verVel != 0)) && !moveLock && (tutorStatus == "move" || tutorStatus == "visit")) //As long as a key is being pressed—!moveLock is included so it doesn't break in menus
         {
             zRotation = ((float)Math.Atan(player.velocity.y / player.velocity.x)) * (float)(180 / Math.PI);
 
@@ -167,57 +170,92 @@ public class TutorialController : MonoBehaviour
 
             lastRotation = sprite.transform.eulerAngles;
         }
-
-
-        if ((speed.x != 0) || (speed.y != 0)) //As long as the ship is in motion
-        {
-            depletionCounter++; //Deplete resources
-            if ((depletionCounter >= depletionRate) && !moveLock)
-            {
-                PlayerStatus.ResourcesCount--;
-                depletionCounter = 0;
-            }
-
-            //Generate a random number, and then multiply it by the area's hostility
-            float rand = UnityEngine.Random.value * (1 + encounterMult);
-
-            if (rand > 1 - cumulatingChance) //Check for random encounter
-            {
-                cumulatingChance = -.025f;
-                //EnemyStatus.ShipHealthMax = 50;
-                //EnemyStatus.ShipHealthCurrent = 50;
-                //EnemyStatus.GoldCount = 50;
-                //EnemyStatus.ResourcesCount = 20;
-                //SceneManager.LoadScene(SceneIndexes.Combat());
-                //Commented out code is executed over in the method called below
-
-                moveLock = true;
-                encounterAlert.GetComponent<AlertManager>().dangerMult = encounterMult;
-                encounterAlert.SetActive(true);
-            }
-            else if (cumulatingChance <= (.025 * (1 + encounterMult))) //The extra stuff in this if statement is so that cumulating chance can't be increased that much inside safer areas
-            {
-                cumulatingChance += encounterChanceIncrease;
-            }
-        }
-
-        PlayerStatus.ShipPos = transform.position;
     }
 
-    private void SetResources()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        resourcesCount.text = "Resources: " + PlayerStatus.ResourcesCount.ToString();
+        if (tutorStatus == "visit") tutorText.text = "\"When you get close enough to an island, you can dock at that island by pressing enter." +
+                " Why don't you try that now?\"";
 
-        if (PlayerStatus.ResourcesCount <= 0)
-        {
-            moveLock = true;
-            player.velocity = new Vector2(0, 0);
-            deathAlert.text = "Your crew has run out of resources, and has starved to death. May the Gods have mercy on their souls.";
-        }
     }
 
-    private void SetGold()
+    private void StartMove()
     {
-        goldCount.text = "Gold: " + PlayerStatus.GoldCount.ToString();
+        tutorText.text = "\"Why don't you try sailing the ship yourself? I think you're old enough by now, don't you?" +
+            " Just use the W, A, S, and D keys.\"";
+    }
+
+    private void StartVisit()
+    {
+        tutorText.text = "\"Well done! Now that you've got the basics down, why don't you brings us over to the coast?\"";
+    }
+
+    private void StartStats()
+    {
+        tutorText.text = "\"Yes, just like that! No need to go into port yet, though. There's still something I want to show you." +
+            " Press that tab button for me, if you will.\"";
+    }
+
+    private void StartMenu()
+    {
+        tutorText.text = "\"Yes, yes, I know; this isn't terribly interesting. But there are some things a competent sailor simply" +
+            " must know. Now, press the escape button for me—go on, now.\"";
+    }
+
+    private void StartConclusion()
+    {
+        tutorText.text = "\"Before we head back to your mother, there's one last thing I need to tell you.\"" +
+            " (press ENTER to continue)";
+        StartCoroutine(GoldAndResources());
+    }
+
+    private void ConcludeTutorial()
+    {
+
+    }
+
+    private IEnumerator GoldAndResources()
+    {
+        yield return new WaitForSeconds(.75f);
+        yield return new WaitUntil(() => Input.GetButton("Submit") == true);
+
+        tutorText.text = "\"Two of the most important things you'll need to keep an eye on as the captain of a ship are gold, " +
+            "and resources.\" (press ENTER to continue)";
+
+        yield return new WaitForSeconds(.75f);
+        yield return new WaitUntil(() => Input.GetButton("Submit") == true);
+
+        tutorText.text = "\"Gold is the universal currency of the world, and can get you pretty much anything you want. Keep in" +
+            "mind: all the gold in the world won't do you a lick of good out in the middle of the ocean.\" (press ENTER to continue)";
+
+        yield return new WaitForSeconds(.75f);
+        yield return new WaitUntil(() => Input.GetButton("Submit") == true);
+
+        tutorText.text = "\"Your resources—that is, your food, water, and medicine—are what you'll need to keep your men alive" +
+            "during your journeys far from land. You'll be able to live without gold, but without resources you may as well" +
+            " toss yourself in the sea and let the sharks have you.\" (press ENTER to continue)";
+
+        yield return new WaitForSeconds(.75f);
+        yield return new WaitUntil(() => Input.GetButton("Submit") == true);
+
+        tutorText.text = "\"You can see how much gold and resources you have up in the top corners of the screen." +
+            " Keep an eye on those numbers, so you don't get caught off guard!\" (press ENTER to continue)";
+
+        yield return new WaitForSeconds(.75f);
+        yield return new WaitUntil(() => Input.GetButton("Submit") == true);
+
+        tutorText.text = "\"That's about all I got to say to you, I suppose. That wasn't so bad, now was it? Well, why don't we " +
+            "head home now? I can teach you more tomorrow, if you like.\" (press ENTER to continue)";
+
+        yield return new WaitForSeconds(.75f);
+        yield return new WaitUntil(() => Input.GetButton("Submit") == true);
+
+        tutorText.text = "(press ENTER to skip your father's long series of financially crippling misfortunes, which threw your" +
+            "family into poverty and funnelled you into a life of crime)";
+
+        yield return new WaitForSeconds(.75f);
+        yield return new WaitUntil(() => Input.GetButton("Submit") == true);
+
+        AdvanceTutorial();
     }
 }
