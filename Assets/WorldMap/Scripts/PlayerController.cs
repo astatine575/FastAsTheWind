@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
     public float speedMult;
     public int depletionRate;
@@ -81,7 +82,7 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    void Start ()
+    void Start()
     {
         player = GetComponent<Rigidbody2D>();
 
@@ -105,13 +106,13 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-        if((Input.GetButton("Submit")) && isVisiting)
+        if ((Input.GetButton("Submit")) && isVisiting)
         {
             SceneManager.LoadScene(SceneIndexes.IslandVisitation());
         }
 
-        if((Input.GetButton("Menu")) && !moveLock && (player.velocity.x == 0) && (player.velocity.y == 0)) 
-            //If moveLock is true, the player is either dead or in a menu. In either case, tab shouldn't open the stats panel
+        if ((Input.GetButton("Menu")) && !moveLock && (player.velocity.x == 0) && (player.velocity.y == 0))
+        //If moveLock is true, the player is either dead or in a menu. In either case, tab shouldn't open the stats panel
         {
             moveLock = true;
 
@@ -121,7 +122,7 @@ public class PlayerController : MonoBehaviour {
             statsPanel.SetActive(true);
         }
 
-        if(Input.GetButton("Cancel") && !moveLock && (player.velocity.x == 0) && (player.velocity.y == 0))
+        if (Input.GetButton("Cancel") && !moveLock && (player.velocity.x == 0) && (player.velocity.y == 0))
 
         {
             moveLock = true;
@@ -139,7 +140,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void FixedUpdate ()
+    private void FixedUpdate()
     {
         float horVel = Input.GetAxis("Horizontal");
         float verVel = Input.GetAxis("Vertical");
@@ -155,7 +156,7 @@ public class PlayerController : MonoBehaviour {
         else player.velocity = new Vector2(0, 0); player.rotation = 0f;
 
 
-        if(((horVel != 0) || (verVel != 0)) && !moveLock) //As long as a key is being pressed—!moveLock is included so it doesn't break in menus
+        if (((horVel != 0) || (verVel != 0)) && !moveLock) //As long as a key is being pressed—!moveLock is included so it doesn't break in menus
         {
             zRotation = ((float)Math.Atan(player.velocity.y / player.velocity.x)) * (float)(180 / Math.PI);
 
@@ -172,7 +173,7 @@ public class PlayerController : MonoBehaviour {
 
             lastRotation = sprite.transform.eulerAngles;
         }
-        
+
 
         if ((speed.x != 0) || (speed.y != 0)) //As long as the ship is in motion
         {
@@ -184,7 +185,7 @@ public class PlayerController : MonoBehaviour {
             }
 
             //Generate a random number, and then multiply it by the area's hostility
-            float rand = UnityEngine.Random.value * (1 + encounterMult); 
+            float rand = UnityEngine.Random.value * (1 + encounterMult);
 
             if (rand > 1 - cumulatingChance) //Check for random encounter
             {
@@ -213,7 +214,7 @@ public class PlayerController : MonoBehaviour {
     {
         resourcesCount.text = "Resources: " + PlayerStatus.ResourcesCount.ToString();
 
-        if(PlayerStatus.ResourcesCount <= 0)
+        if (PlayerStatus.ResourcesCount <= 0)
         {
             moveLock = true;
             player.velocity = new Vector2(0, 0);
