@@ -176,10 +176,10 @@ public class PlayerController : MonoBehaviour {
         }
         
 
-        if ((speed.x != 0) || (speed.y != 0)) //As long as the ship is in motion
+        if (((speed.x != 0) || (speed.y != 0)) && !moveLock) //As long as the ship is in motion
         {
             depletionCounter++; //Deplete resources
-            if ((depletionCounter >= depletionRate) && !moveLock)
+            if ((depletionCounter >= depletionRate))
             {
                 PlayerStatus.ResourcesCount--;
                 depletionCounter = 0;
