@@ -19,6 +19,22 @@ public class SaveAndLoad : MonoBehaviour
         Save();
     }
 
+    public void OnClickMainMenu()
+    {
+        SceneManager.LoadScene(SceneIndexes.MainMenu());
+    }
+
+    public void OnClickSaveExit()
+    {
+        Save();
+        Application.Quit();
+    }
+
+    public void OnClickExit()
+    {
+        Application.Quit();
+    }
+
     public void Load()
     {
         if (File.Exists(Application.dataPath + "/saves/SaveData.dat"))
