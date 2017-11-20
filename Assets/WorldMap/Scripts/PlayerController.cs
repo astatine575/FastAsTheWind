@@ -153,7 +153,8 @@ public class PlayerController : MonoBehaviour
             player.velocity = speed * speedMult;
             //player.AddForce(speed * speedMult);
         }
-        else player.velocity = new Vector2(0, 0);
+        else player.velocity = new Vector2(0, 0); player.rotation = 0f;
+
 
         if (((horVel != 0) || (verVel != 0)) && !moveLock) //As long as a key is being pressed—!moveLock is included so it doesn't break in menus
         {

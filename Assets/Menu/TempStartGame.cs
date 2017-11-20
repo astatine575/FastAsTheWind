@@ -19,6 +19,8 @@ public class TempStartGame : MonoBehaviour {
 
         IslandStats.IslandLocations = GetComponent<IslandGeneration>().generateIslands();
 
+        IslandStats.IslandOffsets = GetComponent<IslandGeneration>().generateOffsets();
+
         SceneManager.LoadScene(SceneIndexes.WorldMap());
 
         PlayerStatus.Ship = new Ship(
