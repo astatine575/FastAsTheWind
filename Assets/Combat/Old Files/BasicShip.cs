@@ -9,4 +9,5 @@ public class BasicShip{
     public float shipHealth;
     public float shipMaxHealth;
 
+
 }

@@ -4,44 +4,50 @@ using UnityEngine;
 
 public class CombatState : MonoBehaviour {
 
-    //Queue of attacks
-    public Queue<Turns> actions = new Queue<Turns>();
-    //List if the player ships.
-    public List<GameObject> player = new List<GameObject>();
-    //List of enemys.
-    public List<GameObject> enemy = new List<GameObject>();
-    // reference to UI script
-    public GameObject UIScripts; // to get a non-static reference to the ViewScript Object
-    private ViewScript UI;
+    public Queue<Turns> actions = new Queue<Turns>();   //Queue of attacks
+    public List<GameObject> player = new List<GameObject>();     //List of the players.
+    public List<GameObject> enemy = new List<GameObject>(); //List of enemies.
+    public GameObject UIScripts;    // reference to UI script
+    private ViewScript UI;  // to get a non-static reference to the ViewScript Object
+
+    public GameObject PlayerCannonBall ;
+    public GameObject EnemyCannonBall;
+
+    private GameObject playerObject;
 
     public bool combatOver;
     public bool playerWon;
 
-    // Use this for initialization
-    void Start () {
+    void Start() {
         // to get a non-static reference to the ViewScript Object
         UI = (ViewScript)UIScripts.GetComponent("ViewScript");
         //Find and adds objects with the tag "Enemy" and "Player"
         enemy.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         player.AddRange(GameObject.FindGameObjectsWithTag("Player"));
 
+        PlayerCannonBall = GameObject.Find("PlayerCannonBall");
+        EnemyCannonBall = GameObject.Find("EnemyCannonBall");
+
         // establish that combat is NOT over, and that the player has NOT won
         combatOver = false;
         playerWon = false;
 
+        playerObject = player[0];
+
+        for (int i = 0; i < PlayerStatus.Ship.weaponSlots.Length; i++) {
+            if (PlayerStatus.Ship.getWeapon(i) != null) {
+                playerObject.AddComponent<BigCannon>();
+            }
+        }
+        
     }
 
-	// Update is called once per frame
-	void Update () {
+    void Update() {
 
-        //Judge if the next attack is from the enemy or player. Kind of bad. Should change. 
+        if (Time.timeScale == 0) { return; }
+
         if (actions.Count > 0) {
-            if (actions.Peek().attackerName == "FTL")
-            {
-                PlayerDoDamage(actions.Dequeue());
-            }
-
-            else EnemyDoDamage(actions.Dequeue());
+            DoTurn(actions.Dequeue());
         }
 
     }
@@ -51,37 +57,67 @@ public class CombatState : MonoBehaviour {
         actions.Enqueue(input);
     }
 
-    //Does damage to enemy or player. Destroy target if health is reduced to 0 or less.
-    void PlayerDoDamage(Turns input)
-    {
-        PlayerShipState test = input.attackerObject.GetComponent<PlayerShipState>();
-        EnemyShipState test2 = input.targetObject.GetComponent<EnemyShipState>();
-        test2.enemy.shipHealth = test2.enemy.shipHealth - test.cannon.weaponAttack;
-        UI.printToCombatLog("The " + test.player.shipName + " dealt " + test.cannon.weaponAttack.ToString() + " damage to the " + test2.enemy.shipName + "!");
-        if (test2.enemy.shipHealth <= 0) {
+    void DoTurn(Turns input) {
+        GameObject target = input.targetObject;
+        FirstCannon weapon = input.weaponUsed;
+        weapon.DoDamage(input);
+    }
+
+    public void TextOut (Turns input,int damage){
+
+        Health targetHealth = input.targetObject.GetComponent<Health>();
+
+        if (input.targetObject.tag == "Enemy")
+        {
+
+            PlayerCannonBall.GetComponent<CannonBall>().Fire = true;
+            UI.printToCombatLog("The " + "Player" + " dealt " + damage.ToString() + " damage to the " + "Enemy" + "!");
+            PlayerStatus.AmmoCount -= 1;
+        }
+
+
+        else
+        {
+            EnemyCannonBall.GetComponent<CannonBall>().Fire = true;
+            UI.printToCombatLog("The " + "Enemy" + " dealt " + damage.ToString() + " damage to the " + "Player" + "!");
+        }
+
+        if (targetHealth.ShipHull <= 0){
+
             Destroy(input.targetObject);
-            enemy.Remove(input.targetObject);
-            EnemyStatus.ShipHealthCurrent = 0;
-            UI.printToCombatLog("The " + test.player.shipName + " has sunk the " + test2.enemy.shipName + "!");
-            playerWon = true;
-            combatOver = true;
+
+            if (input.targetObject.tag == "Player") {
+                player.Remove(input.targetObject);
+                PlayerStatus.ShipHealthCurrent = 0;
+                UI.printToCombatLog("The " + "Enemy" + " has sunk the " + "Player" + "!");
+                playerWon = false;
+                combatOver = true;
+            }
+
+            else {
+                enemy.Remove(input.targetObject);
+                Destroy(PlayerCannonBall);
+                Destroy(EnemyCannonBall);
+                EnemyStatus.ShipHealthCurrent = 0;
+                UI.printToCombatLog("The " + "Player" + " has sunk the " + "Enemy" + "!");
+                playerWon = true;
+                combatOver = true;
+                
+            }
         }
     }
 
-    void EnemyDoDamage(Turns input)
-    {
-        EnemyShipState test = input.attackerObject.GetComponent<EnemyShipState>();
-        PlayerShipState test2 = input.targetObject.GetComponent<PlayerShipState>();
-        test2.player.shipHealth = test2.player.shipHealth - test.cannon.weaponAttack;
-        UI.printToCombatLog("The " + test.enemy.shipName + " dealt " + test.cannon.weaponAttack.ToString() + " damage to the " + test2.player.shipName + "!");
-        if (test2.player.shipHealth <= 0)
-        {
-            Destroy(input.targetObject);
-            player.Remove(input.targetObject);
-            PlayerStatus.ShipHealthCurrent = 0;
-            UI.printToCombatLog("The " + test.enemy.shipName + " has sunk the " + test2.player.shipName + "!");
-            playerWon = false;
-            combatOver = true;
+    public void TextMiss(Turns input) {
+        if (input.targetObject.tag == "Enemy") {
+            UI.printToCombatLog("The " + "Player" + " missed the " + "Enemy" + "!");
+            PlayerStatus.AmmoCount -= 1;
         }
+
+           
+        else
+
+            UI.printToCombatLog("The " + "Enemy" + " missed the "  + "Player" + "!");
+
     }
+
 }
