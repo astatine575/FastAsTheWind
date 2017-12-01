@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 339d1fd38dedb554b927837c701b3675
+timeCreated: 1506980205
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: UglyQua
+  fontNames:
+  - UglyQua
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 629176304f3378649b67bb5366332125, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

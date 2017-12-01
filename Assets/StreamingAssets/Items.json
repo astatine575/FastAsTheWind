@@ -1,0 +1,16 @@
+[
+ {
+   "id" : 0,
+   "title" : "Canon",
+   "power" : 5,
+   "ammo" : 20,
+   "description" : "A decent weapon used by pirates"
+ },
+ {
+ 	"id" : 1,
+ 	"title" : "Laser",
+ 	"power" : 10,
+    "ammo" : 10,
+    "description" : "A powerful weapon that can break through shield"
+ }
+]
