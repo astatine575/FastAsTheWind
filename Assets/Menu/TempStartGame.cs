@@ -19,7 +19,9 @@ public class TempStartGame : MonoBehaviour {
 
         IslandStats.IslandLocations = GetComponent<IslandGeneration>().generateIslands();
 
-        SceneManager.LoadScene(SceneIndexes.WorldMap());
+        IslandStats.IslandOffsets = GetComponent<IslandGeneration>().generateOffsets();
+
+        SceneManager.LoadScene(SceneIndexes.Tutorial());
 
         PlayerStatus.Ship = new Ship(
                                           "FTL",                            // name
